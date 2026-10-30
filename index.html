@@ -1,359 +1,1213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>For Tanuu.... 🌟</title>
-<style>
-:root{--pink:#ffc1da;--baby:#ffe3ee;--lav:#cdb6ff;--white:#fff;--night:#150f3d;--night2:#2d1b62;--glow:0 0 18px rgba(255,193,218,.75);
---hand:'Segoe Print','Bradley Hand','Snell Roundhand','Apple Chancery','Comic Sans MS',cursive}
-*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:var(--night);color:var(--white);font-family:var(--hand)}
-body{background:linear-gradient(170deg,var(--night) 0%,var(--night2) 55%,#6a3a9a 100%)}
-#sky,#fx{position:fixed;inset:0;pointer-events:none;overflow:hidden}
-#fx{z-index:50}
-.tw{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 6px #fff;animation:tw 3s ease-in-out infinite}
-@keyframes tw{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.3)}}
-.fl{position:absolute;bottom:-40px;animation:rise linear forwards;opacity:0;filter:drop-shadow(0 0 6px var(--pink))}
-@keyframes rise{10%{opacity:.9}100%{transform:translate(var(--sx,0),-112dvh) rotate(40deg);opacity:0}}
-.fall{position:absolute;top:-30px;animation:fall linear forwards;color:#fff3b0;filter:drop-shadow(0 0 6px #fff3b0)}
-@keyframes fall{to{transform:translate(-30vw,112dvh) rotate(200deg);opacity:.2}}
-.shoot{position:fixed;z-index:60;height:3px;width:160px;border-radius:3px;pointer-events:none;
-background:linear-gradient(90deg,transparent,var(--pink),#fff);box-shadow:0 0 14px 3px rgba(255,193,218,.8);
-transform:rotate(25deg);animation:shoot 1.3s ease-in forwards}
-.shoot::after{content:"✦";position:absolute;right:-10px;top:-9px;font-size:18px;color:#fff}
-@keyframes shoot{from{translate:0 0;opacity:1}to{translate:110vw 55vw;opacity:0}}
-.sp{position:fixed;pointer-events:none;z-index:55;animation:sp 1.4s ease-out forwards}
-@keyframes sp{to{transform:translate(var(--dx),var(--dy)) scale(.3) rotate(120deg);opacity:0}}
-
-.scene{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
-padding:max(20px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));text-align:center;overflow:hidden;
-opacity:0;visibility:hidden;transition:opacity .7s ease,visibility .7s}
-.scene.on{opacity:1;visibility:visible}
-#s4{background:linear-gradient(160deg,#ffd9e8,#f6c6ee 60%,#d9c4ff)}
-#s4 h2,#s4 p{color:#6b2d5c}
-#s5{background:linear-gradient(170deg,#2a1560,#7a3b9e 60%,#e58db8)}
-h2{font-size:clamp(1.3rem,5.5vw,2rem);font-weight:400;text-shadow:var(--glow);max-width:520px;line-height:1.4}
-.line{min-height:2.6em;font-size:clamp(1.25rem,5.5vw,1.9rem);text-shadow:var(--glow);max-width:520px;line-height:1.4}
-.btn{font:inherit;font-size:1.1rem;color:#6b2d5c;border:0;cursor:pointer;padding:14px 28px;border-radius:999px;
-background:linear-gradient(135deg,#fff,var(--pink));box-shadow:0 0 22px rgba(255,160,205,.8);animation:pulse 2.4s ease-in-out infinite;
-transition:transform .2s;opacity:0;pointer-events:none;touch-action:manipulation}
-.btn.show{opacity:1;pointer-events:auto;transition:opacity 1s,transform .2s}
-.btn:hover{transform:scale(1.07)}.btn:active{transform:scale(.94)}
-.btn:focus-visible,.mini:focus-visible{outline:3px solid var(--lav);outline-offset:3px}
-.heart{border-radius:60px 60px 60px 60px;padding:16px 34px}
-@keyframes pulse{50%{box-shadow:0 0 34px rgba(255,160,205,1)}}
-.choices{display:flex;flex-direction:column;gap:12px;width:min(320px,90%)}
-.choices .btn{opacity:1;pointer-events:auto;animation:none;background:rgba(255,255,255,.18);color:#fff;
-border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-
-.star{width:150px;height:150px;animation:bob 2.6s ease-in-out infinite;filter:drop-shadow(0 0 16px #ffe9a8)}
-.star.sm{width:84px;height:84px}
-@keyframes bob{50%{transform:translateY(-14px) rotate(3deg)}}
-.star g.arm{transition:transform .6s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box}
-.star .aL{transform-origin:100% 0}.star .aR{transform-origin:0 0}
-.star.open .aL{transform:rotate(70deg)}.star.open .aR{transform:rotate(-70deg)}
-.star.open{animation:hug .9s ease-in-out infinite}
-@keyframes hug{50%{transform:scale(1.18)}}
-.star .eye{animation:blink 4s infinite;transform-box:fill-box;transform-origin:center}
-@keyframes blink{94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
-
-.card{width:min(440px,100%);max-height:calc(100dvh - 130px);overflow-y:auto;padding:26px 22px;border-radius:22px;text-align:left;color:#7a2f5d;
-background:linear-gradient(160deg,#fff4f8,#ffe0ec);box-shadow:0 0 40px rgba(255,160,205,.6),inset 0 0 0 2px rgba(255,255,255,.7);
-transition:opacity 1s,filter 1s,transform 1s}
-.card p{margin-bottom:14px;line-height:1.65;font-size:1.02rem;opacity:0;transform:translateY(8px);animation:ink 1.4s forwards}
-.card p.sig{text-align:right}
-@keyframes ink{to{opacity:1;transform:none}}
-.card.gone{opacity:0;filter:blur(8px);transform:scale(.9)}
-
-.player{width:min(560px,100%);aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:rgba(255,255,255,.45);
-border:3px solid #fff;box-shadow:0 10px 40px rgba(190,90,160,.45);display:flex;align-items:center;justify-content:center}
-.player video{width:100%;height:100%;background:#000;object-fit:contain}
-.ph{color:#8a3a70;font-size:1.2rem;padding:16px}.ph b{display:block;font-size:2.4rem;animation:bob 2.2s infinite}
-
-.moon{position:absolute;top:5dvh;right:8vw;width:78px;height:78px;border-radius:50%;box-shadow:inset -22px 6px 0 0 #fff3c4;
-filter:drop-shadow(0 0 22px #fff3c4);transform:rotate(-20deg);animation:tw 6s infinite}
-#s5 .star.corner{position:absolute;left:12px;bottom:max(14px,env(safe-area-inset-bottom))}
-#m5{min-height:7.5em;display:flex;align-items:center;justify-content:center;font-size:clamp(1.3rem,6vw,2rem);text-shadow:0 0 14px rgba(255,255,255,.8);max-width:520px;line-height:1.4;transition:opacity .6s}
-#m5.final{font-size:clamp(1.6rem,7vw,2.4rem)}
-#done{min-height:1.6em;font-size:1.25rem;text-shadow:var(--glow)}
-.mini{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;z-index:70;width:44px;height:44px;border-radius:50%;font-size:1.3rem;
-border:1px solid rgba(255,255,255,.6);color:#fff;cursor:pointer;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none}
-.mini.on{display:block}.mini.off{opacity:.5}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-.card p{opacity:1;transform:none}.tw{opacity:.8}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikramakshit | Arcturus // Spider-Verse</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --miles-black: #0a0a0a;
+            --miles-red: #e23636;
+            --miles-dark-red: #8b0000;
+            --miles-bright-red: #ff4444;
+            --comic-yellow: #ffd700;
+            --comic-white: #f0f0f0;
+            --comic-gray: #888888;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            background: var(--miles-black);
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--miles-black);
+            color: var(--comic-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* DYNAMIC COMIC BACKGROUND */
+        .comic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(226, 54, 54, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 68, 68, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+            animation: bgPulse 6s ease-in-out infinite;
+        }
+        
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* BOLD HALFTONE */
+        .halftone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at center, var(--miles-red) 2px, transparent 2px);
+            background-size: 10px 10px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 1;
+            animation: halftoneMove 15s linear infinite;
+        }
+        
+        @keyframes halftoneMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(10px, 10px); }
+        }
+        
+        /* COMIC BURST RAYS */
+        .burst-rays {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200vmax;
+            height: 200vmax;
+            transform: translate(-50%, -50%);
+            background: repeating-conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 6deg,
+                rgba(226, 54, 54, 0.05) 6deg,
+                rgba(226, 54, 54, 0.05) 8deg
+            );
+            animation: burstRotate 50s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes burstRotate {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* FLOATING MILES IMAGES */
+        .miles-float {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2;
+            filter: drop-shadow(0 0 20px rgba(226, 54, 54, 0.6));
+            animation: floatMiles 8s ease-in-out infinite;
+        }
+        
+        .miles-1 {
+            bottom: 5%;
+            right: 2%;
+            width: 260px;
+            opacity: 0.95;
+            animation-delay: 0s;
+            z-index: 5;
+        }
+        
+        .miles-2 {
+            top: 15%;
+            left: 2%;
+            width: 220px;
+            opacity: 0.85;
+            animation-delay: -4s;
+            z-index: 5;
+        }
+        
+        .miles-3 {
+            bottom: 25%;
+            left: 3%;
+            width: 180px;
+            opacity: 0.75;
+            animation-delay: -2s;
+            z-index: 4;
+        }
+        
+        @keyframes floatMiles {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-40px) rotate(2deg); }
+        }
+        
+        /* MOVING SPIDERS */
+        .spider-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            overflow: hidden;
+        }
+        
+        .spider {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.7;
+            animation: spiderCrawl var(--duration) linear infinite;
+            filter: drop-shadow(0 0 8px var(--miles-red));
+        }
+        
+        @keyframes spiderCrawl {
+            0% {
+                transform: translate(var(--start-x), var(--start-y)) rotate(0deg);
+            }
+            25% {
+                transform: translate(calc(var(--start-x) + 80px), calc(var(--start-y) + 40px)) rotate(90deg);
+            }
+            50% {
+                transform: translate(calc(var(--start-x) + 160px), calc(var(--start-y) - 20px)) rotate(180deg);
+            }
+            75% {
+                transform: translate(calc(var(--start-x) + 240px), calc(var(--start-y) + 60px)) rotate(270deg);
+            }
+            100% {
+                transform: translate(calc(var(--start-x) + 320px), var(--start-y)) rotate(360deg);
+            }
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            animation: glitch-skew 3s infinite;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+            color: var(--comic-yellow);
+            z-index: -1;
+        }
+        
+        .glitch::after {
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+            color: var(--miles-red);
+            z-index: -2;
+        }
+        
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); transform: translate(-3px, -3px); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(3px, 3px); }
+            40% { clip-path: inset(40% 0 50% 0); transform: translate(-3px, 3px); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translate(3px, -3px); }
+            80% { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 3px); }
+            100% { clip-path: inset(30% 0 50% 0); transform: translate(3px, -3px); }
+        }
+        
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(15% 0 85% 0); transform: translate(3px, 3px); }
+            20% { clip-path: inset(65% 0 25% 0); transform: translate(-3px, -3px); }
+            40% { clip-path: inset(45% 0 45% 0); transform: translate(3px, -3px); }
+            60% { clip-path: inset(85% 0 10% 0); transform: translate(-3px, 3px); }
+            80% { clip-path: inset(5% 0 75% 0); transform: translate(3px, 3px); }
+            100% { clip-path: inset(35% 0 55% 0); transform: translate(-3px, 3px); }
+        }
+        
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            10% { transform: skew(-2deg); }
+            20% { transform: skew(2deg); }
+            30% { transform: skew(0deg); }
+            100% { transform: skew(0deg); }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 4px solid var(--miles-red);
+            box-shadow: 0 4px 20px rgba(226, 54, 54, 0.4);
+        }
+        
+        .logo {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            color: var(--miles-red);
+            text-shadow: 
+                3px 3px 0 var(--comic-yellow),
+                6px 6px 0 rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+            transform: rotate(-3deg);
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% { text-shadow: 3px 3px 0 var(--comic-yellow), 6px 6px 0 rgba(0,0,0,0.5); }
+            50% { text-shadow: 3px 3px 0 var(--comic-yellow), 6px 6px 0 rgba(226, 54, 54, 0.8); }
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--comic-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(226, 54, 54, 0.1);
+            font-weight: bold;
+        }
+        
+        .nav-links a:hover {
+            color: var(--miles-black);
+            border-color: var(--miles-red);
+            background: var(--comic-yellow);
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 4px 4px 0 var(--miles-red);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            z-index: 10;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+            position: relative;
+        }
+        
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--miles-black);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: flicker 3s infinite;
+            background: var(--comic-yellow);
+            padding: 0.6rem 1.2rem;
+            transform: rotate(-2deg);
+            border: 3px solid var(--miles-red);
+            box-shadow: 4px 4px 0 var(--miles-red);
+            font-weight: bold;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+            52% { opacity: 0.3; }
+            54% { opacity: 1; }
+        }
+        
+        .hero h1 {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(4rem, 12vw, 8rem);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: var(--comic-white);
+            text-shadow: 
+                4px 4px 0 var(--miles-red),
+                8px 8px 0 var(--miles-dark-red),
+                12px 12px 0 rgba(0,0,0,0.5);
+            transform: rotate(-3deg);
+            letter-spacing: 6px;
+            animation: titleShake 4s ease-in-out infinite;
+        }
+        
+        @keyframes titleShake {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(-2deg); }
+        }
+        
+        .hero-handle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            color: var(--miles-red);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(226, 54, 54, 0.8);
+            background: var(--miles-black);
+            padding: 0.6rem 1.2rem;
+            display: inline-block;
+            transform: rotate(2deg);
+            border: 3px solid var(--miles-red);
+            box-shadow: 0 0 20px rgba(226, 54, 54, 0.3);
+            font-weight: bold;
+        }
+        
+        .hero-bio {
+            font-size: 1.25rem;
+            color: var(--comic-gray);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+            background: rgba(10, 10, 10, 0.9);
+            padding: 1.5rem;
+            border-left: 5px solid var(--miles-red);
+            border-right: 5px solid var(--comic-yellow);
+            transform: rotate(-1deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+        
+        .meta-badge {
+            padding: 0.7rem 1.3rem;
+            background: var(--miles-red);
+            color: var(--comic-white);
+            transform: rotate(var(--rot));
+            border: 3px solid var(--comic-white);
+            box-shadow: 4px 4px 0 var(--comic-yellow);
+            font-weight: bold;
+        }
+        
+        .meta-badge:nth-child(1) { --rot: -3deg; }
+        .meta-badge:nth-child(2) { --rot: 2deg; }
+        .meta-badge:nth-child(3) { --rot: -2deg; }
+        .meta-badge:nth-child(4) { --rot: 3deg; }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--miles-red);
+            color: var(--comic-white);
+            text-decoration: none;
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            border: 4px solid var(--comic-white);
+            transform: rotate(-2deg);
+            transition: all 0.3s;
+            box-shadow: 
+                6px 6px 0 var(--comic-yellow),
+                0 0 30px rgba(226, 54, 54, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-cta:hover {
+            transform: rotate(2deg) scale(1.05);
+            box-shadow: 
+                8px 8px 0 var(--miles-red),
+                0 0 40px rgba(255, 215, 0, 0.6);
+            background: var(--comic-yellow);
+            color: var(--miles-black);
+        }
+        
+        /* PROFILE CONTAINER - TUMHARI COMIC PHOTO */
+        .profile-container {
+            position: relative;
+            margin: 2rem auto;
+            width: 320px;
+            height: 320px;
+        }
+        
+        .profile-box {
+            width: 100%;
+            height: 100%;
+            border: 5px solid var(--comic-white);
+            background: var(--miles-black);
+            position: relative;
+            transform: rotate(-3deg);
+            box-shadow: 
+                10px 10px 0 var(--miles-red),
+                20px 20px 0 rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Comic Panels */
+        .panel-section {
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--miles-red);
+            text-shadow: 
+                3px 3px 0 var(--comic-yellow),
+                6px 6px 0 var(--miles-dark-red);
+            transform: rotate(-2deg);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            padding: 0.5rem 2rem;
+            background: var(--miles-black);
+            border: 5px solid var(--miles-red);
+            box-shadow: 
+                8px 8px 0 var(--comic-yellow),
+                0 0 40px rgba(226, 54, 54, 0.3);
+        }
+        
+        .comic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .comic-card {
+            background: var(--miles-black);
+            border: 4px solid var(--comic-white);
+            padding: 2rem;
+            position: relative;
+            transform: rotate(var(--rotation));
+            transition: all 0.3s;
+            box-shadow: 
+                8px 8px 0 var(--miles-red),
+                0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .comic-card:nth-child(1) { --rotation: -3deg; }
+        .comic-card:nth-child(2) { --rotation: 2deg; }
+        .comic-card:nth-child(3) { --rotation: -2deg; }
+        
+        .comic-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+            box-shadow: 
+                12px 12px 0 var(--comic-yellow),
+                0 0 30px rgba(226, 54, 54, 0.4);
+            border-color: var(--comic-yellow);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 4px dashed var(--miles-red);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 5px var(--miles-red));
+        }
+        
+        .card-issue {
+            font-family: 'Bangers', cursive;
+            font-size: 1.1rem;
+            color: var(--miles-black);
+            background: var(--comic-yellow);
+            padding: 0.4rem 1rem;
+            transform: rotate(3deg);
+            border: 3px solid var(--miles-black);
+            box-shadow: 2px 2px 0 var(--miles-red);
+        }
+        
+        .card-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--comic-white);
+            text-shadow: 
+                3px 3px 0 var(--miles-red),
+                6px 6px 0 rgba(0,0,0,0.5);
+        }
+        
+        .card-content {
+            font-size: 1rem;
+            color: var(--comic-gray);
+            line-height: 1.8;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            background: var(--miles-red);
+            color: var(--comic-white);
+            border: 2px solid var(--comic-white);
+            transform: rotate(-1deg);
+            box-shadow: 3px 3px 0 var(--comic-yellow);
+            font-weight: bold;
+        }
+        
+        /* Interests Section */
+        .interests-section {
+            background: repeating-linear-gradient(
+                45deg,
+                var(--miles-black),
+                var(--miles-black) 20px,
+                rgba(226, 54, 54, 0.08) 20px,
+                rgba(226, 54, 54, 0.08) 40px
+            );
+            position: relative;
+        }
+        
+        .interests-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--miles-red),
+                var(--miles-red) 20px,
+                var(--comic-yellow) 20px,
+                var(--comic-yellow) 40px
+            );
+        }
+        
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .interest-item {
+            background: var(--miles-black);
+            border: 4px solid var(--comic-white);
+            padding: 1.5rem;
+            text-align: center;
+            transform: rotate(var(--tilt));
+            transition: all 0.3s;
+            box-shadow: 
+                6px 6px 0 var(--miles-red),
+                0 0 15px rgba(0,0,0,0.3);
+        }
+        
+        .interest-item:nth-child(1) { --tilt: -3deg; }
+        .interest-item:nth-child(2) { --tilt: 2deg; }
+        .interest-item:nth-child(3) { --tilt: -2deg; }
+        .interest-item:nth-child(4) { --tilt: 3deg; }
+        .interest-item:nth-child(5) { --tilt: -2deg; }
+        .interest-item:nth-child(6) { --tilt: 3deg; }
+        
+        .interest-item:hover {
+            transform: rotate(0deg) scale(1.15);
+            border-color: var(--comic-yellow);
+            box-shadow: 
+                10px 10px 0 var(--comic-yellow),
+                0 0 25px rgba(226, 54, 54, 0.4);
+            z-index: 10;
+            background: var(--miles-dark-red);
+        }
+        
+        .interest-icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+            filter: drop-shadow(0 0 8px var(--miles-red));
+        }
+        
+        .interest-label {
+            font-family: 'Bangers', cursive;
+            font-size: 1.3rem;
+            color: var(--comic-yellow);
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 var(--miles-red);
+        }
+        
+        /* Gaming Section */
+        .gaming-section {
+            background: var(--miles-dark-red);
+            position: relative;
+        }
+        
+        .gaming-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--comic-yellow),
+                var(--comic-yellow) 30px,
+                var(--miles-black) 30px,
+                var(--miles-black) 60px
+            );
+        }
+        
+        .gaming-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .game-card {
+            background: var(--miles-black);
+            border: 4px solid var(--comic-white);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            transform: rotate(var(--tilt));
+            box-shadow: 
+                6px 6px 0 var(--comic-yellow),
+                0 0 15px rgba(0,0,0,0.4);
+        }
+        
+        .game-card:nth-child(odd) { --tilt: -2deg; }
+        .game-card:nth-child(even) { --tilt: 2deg; }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .game-card:hover::before {
+            left: 100%;
+        }
+        
+        .game-card:hover {
+            transform: rotate(0deg) scale(1.1);
+            border-color: var(--comic-yellow);
+            box-shadow: 
+                10px 10px 0 var(--miles-red),
+                0 0 25px rgba(255, 215, 0, 0.3);
+        }
+        
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+            filter: drop-shadow(0 0 5px var(--comic-yellow));
+        }
+        
+        .game-name {
+            font-family: 'Bangers', cursive;
+            font-size: 1.3rem;
+            color: var(--comic-yellow);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 var(--miles-red);
+        }
+        
+        .game-id {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--comic-white);
+            background: var(--miles-red);
+            padding: 0.6rem 1.2rem;
+            border: 2px solid var(--comic-white);
+            display: inline-block;
+            transform: rotate(-1deg);
+            font-weight: bold;
+        }
+        
+        /* Quote Section with Miles Upside Down */
+        .quote-section {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: var(--miles-red);
+            position: relative;
+            border-top: 5px solid var(--comic-yellow);
+            border-bottom: 5px solid var(--comic-yellow);
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .quote-section::before {
+            content: '❝';
+            position: absolute;
+            top: -3rem;
+            left: 2rem;
+            font-size: 15rem;
+            color: rgba(0, 0, 0, 0.2);
+            font-family: serif;
+        }
+        
+        .quote-miles {
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 200px;
+            opacity: 0.9;
+            transform: scaleX(-1) rotate(15deg);
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+            animation: milesHang 4s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        @keyframes milesHang {
+            0%, 100% { transform: scaleX(-1) rotate(15deg) translateY(0); }
+            50% { transform: scaleX(-1) rotate(15deg) translateY(-15px); }
+        }
+        
+        .quote-text {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: var(--comic-white);
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            text-shadow: 
+                4px 4px 0 var(--miles-black),
+                8px 8px 0 rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+            transform: rotate(-1deg);
+            line-height: 1.3;
+        }
+        
+        .quote-author {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--comic-yellow);
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Social Section */
+        .social-section {
+            text-align: center;
+            position: relative;
+        }
+        
+        .social-cta {
+            font-size: 1.3rem;
+            color: var(--comic-gray);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .social-handle {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem 3rem;
+            background: var(--miles-red);
+            color: var(--comic-white);
+            text-decoration: none;
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            border: 4px solid var(--comic-white);
+            transform: rotate(-2deg);
+            transition: all 0.4s;
+            box-shadow: 
+                8px 8px 0 var(--comic-yellow),
+                0 0 40px rgba(226, 54, 54, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-handle:hover {
+            background: var(--comic-yellow);
+            color: var(--miles-black);
+            transform: rotate(2deg) scale(1.1);
+            box-shadow: 
+                12px 12px 0 var(--miles-red),
+                0 0 50px rgba(255, 215, 0, 0.6);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 4px solid var(--miles-red);
+            position: relative;
+            z-index: 10;
+            background: var(--miles-black);
+        }
+        
+        .footer-quote {
+            font-family: 'Bangers', cursive;
+            font-size: 1.6rem;
+            color: var(--comic-gray);
+            margin-bottom: 1rem;
+            transform: rotate(-1deg);
+            text-shadow: 2px 2px 0 var(--miles-red);
+        }
+        
+        .footer-credit {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--miles-red);
+            font-weight: bold;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .profile-container {
+                width: 260px;
+                height: 260px;
+            }
+            
+            .miles-float {
+                display: none;
+            }
+            
+            .quote-miles {
+                width: 120px;
+                opacity: 0.6;
+            }
+            
+            .interests-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .comic-card, .game-card, .interest-item {
+                transform: none !important;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 14px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--miles-black);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--miles-red);
+            border: 3px solid var(--comic-yellow);
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute"><defs><radialGradient id="sg" cx="50%" cy="40%"><stop offset="0" stop-color="#fff7c2"/><stop offset="1" stop-color="#ffd86b"/></radialGradient></defs></svg>
-<div id="sky"></div>
-<div id="fx"></div>
-<button class="mini" id="music" aria-label="Music on or off" title="Music">♪</button>
-
-<!-- SCENE 1 -->
-<section class="scene on" id="s1">
-  <div class="star-slot" data-star></div>
-  <div class="line" id="t1a"></div>
-  <div class="line" id="t1b"></div>
-  <button class="btn heart" id="go1">Come here, Tanuu... ♡</button>
-</section>
-
-<!-- SCENE 2 -->
-<section class="scene" id="s2">
-  <div class="card" id="card"></div>
-  <button class="btn" id="go2">Wanna see a shooting star? 🌠</button>
-</section>
-
-<!-- SCENE 3 -->
-<section class="scene" id="s3">
-  <div class="star-slot" data-star></div>
-  <h2>Tanu..… kya hua, naraz ho? 🥺</h2>
-  <div class="choices" id="choices">
-    <button class="btn" data-r="0">Haan, thodi si 😤</button>
-    <button class="btn" data-r="1">Thoda sa sad hoon 🥹</button>
-    <button class="btn" data-r="2">Gussssaaa huuu.. 🫂</button>
-  </div>
-  <div class="line" id="resp"></div>
-  <button class="btn" id="go3">One tiny surprise for you →</button>
-</section>
-
-<!-- SCENE 4 -->
-<section class="scene" id="s4">
-  <h2>A little something to make you smile, Tanuuu... 💗</h2>
-  <div class="player" id="player"></div>
-  <p class="line" style="min-height:0">Ready for the last little surprise? ✨</p>
-  <button class="btn show" id="go4">Next, my little star →</button>
-</section>
-
-<!-- SCENE 5 -->
-<section class="scene" id="s5">
-  <div class="moon"></div>
-  <div id="m5"></div>
-  <button class="btn" id="hug">Tap 5 to 10 timess if uuu... smiled 🫂</button>
-  <div id="done"></div>
-  <div class="star sm corner" id="cornerStar" data-star-inline></div>
-</section>
-
-<script>
-/* ============ 🎵 ADD YOUR MEDIA HERE ============
-   1) SONG_SRC  → put your audio file path between the quotes, e.g. "music/song.mp3"
-   2) VIDEO_SRC → put your video file path between the quotes, e.g. "video/surprise.mp4"
-   Leave them empty and the site still works (no music, video shows a placeholder). */
-const SONG_SRC = "TanuSong.mp3";
-const VIDEO_SRC = "VikramAkshitSorryyy.mp4";
-
-/* ============ ✏️ EDIT YOUR WORDS HERE ============ */
-const LETTER = [
-"Hey, Tanuu… 🌷🩷✨",
-
-"Pata hai, kabhi-kabhi na, bina kisi special reason ke bhi dil udaas ho jaata hai. 🥺💗 Aur kabhi sab kuch theek hote hue bhi kuch theek nahi lagta. 🌧️🫂",
-
-"I don’t know exactly what you’re feeling right now, and I won’t pretend that I can magically fix everything. 🥹💕 But I want you to know one thing  tumhe esse akelaa too bilkulll nahi chodhnee walaa 🫂💗🌷.",
-
-"Agar aaj smile karne ka mann nahi hai, toh mat karo. 🥺 Agar baat karne ka mann nahi hai, toh woh bhi okay hai. 🩷🫶 You don’t have to explain every little thing or pretend to be happy just to make everyone else comfortable. 🌸🤍",
-
-"Bas thoda sa rest kar lo, apne aap ko time do, aur yaad rakhna ki tumhareee nraaz hone se ek insaaan ko kaafi jyadaa farq padta hai...😭💗🫂",
-
-"And Tanuu...? 🌷 Even the stars disappear from the sky sometimes, but that doesn’t mean they stop shining. ✨🌙⭐",
-
-"So, tum merii one of my favvv star yani sirius se bhi pheleee aati ho 🥰🌟💖, take a deep breath. 🌬️🫶 You don’t need to figure everything out today. One little step at a time, okay? 🐣🌷",
-
-"Sending you the biggest virtual hug, the softest forehead kiss, and anddd ekkkk jaduuuuuuu ki jhappppppppppppiiiiii heheheehhehe . 🫂💗✨🌟",
-
-"Abhi ke liye bas itna yaad rakhna: you matter, your feelings matter, and you deserve myyyy careeee... too. 🥹💞 Tum jab tak Nahi khushhh hogii tumhe mnata rahungaaa 💕🫂🌷🥰",
-
-"— Someone who really wants to see you smile again. 🌙💗✨"
-];
-const S1_LINES = ["I understand… 🥺💗", "Just click here, Seniorrrrr ✨"];
-const S3_REPLIES = [
-  "Achha baba, sorryyy… ab gussa thoda kam karein? 🥺💗",
-  "Awww, idhar aao… sending you the biggest hug. 🫂",
-  "Hug delivery for my Tanuuuu....! 💗🫂"
-];
-const S5_LINES = [
-  "Tanuuu… aise udaas aaappp bilkulll achiii nahiii lagtiii ? 🥺💗",
-  "Khushhhhh raha karo naaa… 🌷",
-  "Aapke khush rehne se iss Earth par koi aur bhi bohot zyaada khush hota hai. 🌍💞",
-  "Chalo abbb… ek chhoti si smile toh doooooooooooo! 🥹🫶"
-];
-const S5_FINAL = "Hasooo abbb, ekkkkkkk badiiiiiiiiiiiii si smileeeeee! ✨💗";
-const HUG_DONE = "💗 🥹 🌷 ✨ 🫂 💕 🩷 🥰 🌙 💖 🦋 🤍 🫶 💓 🎀 🌸 🥺 💞 ⭐ 🧸 💝 🩵 🌹 🥲 💘 ☁️ 🫰 💜 🌟 💐 😍 🪷 ❤️ 💫 🕊️ 💟 🧡 🫠 🌺 💛 🥹💕 🪻 🩶 💚 🖤 🌻 💌 🤎 🩷✨ 🪽 🌈 💖🫂 🌼 🫀 ❤️‍🔥 💮 🩵🥹 🌠 🧁 🍓 🦢 💗🌷 💞✨ 🪐 🫶🏻 💝🌸 🥰💗 🫂💖 🎀🩷 🥺💞 🌙💗 🤍✨ 💐💕 🧸💖 💓🌷 🦋💗 🥹🫶 💕🌸 🩷🫂 💖✨ 🌹💗 🥺🩷 🫶💞 🌟💖 💗🤍 🥰💕 🌷💖 🫂🩷 💓✨ 💝🥹 🌸💞 🩵🫶 💗⭐ 💖🎀 🥹🌙 💕🦋 🩷 Tanuuuuuuuu.....!🌹 🫂✨ 💞🤍 💗💗 💖💖 🥹🥹 🫶🫶 🌷🌷 💕💕 ✨✨ 🩷🩷 🧸🎀💗 🌸🦋💖 🌙⭐💕 🥹🫂💞 🩷🌷✨ 💖🤍🫶 💗🎀🧸 💕🌹✨ 🥺🩷🫂 💞🌸🦋 💖🌙⭐ 🥰🫶💗 🤍🌷💞 🩵✨💕 ❤️‍🩹💗 🫂🥹🌸 💘🦋💖 🎀🌷🩷 🌹💐🤍 🥹💖✨ 💕🫶🌙 🧸🩷💞 💗🪽✨ 💌";
-const PLACEHOLDER = "Your little surprise will be here ♡";
-
-/* ============ ENGINE (no need to edit below) ============ */
-const $ = s => document.querySelector(s);
-const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const wait = ms => new Promise(r => setTimeout(r, RM ? 0 : ms));
-const rnd = (a, b) => a + Math.random() * (b - a);
-const fx = $("#fx"), sky = $("#sky");
-
-/* star character */
-const STAR = `<svg viewBox="0 0 120 120" class="star-svg" aria-hidden="true">
-<g class="arm aL"><path d="M24 70 Q12 80 10 94" stroke="#ffd86b" stroke-width="9" stroke-linecap="round" fill="none"/></g>
-<g class="arm aR"><path d="M96 70 Q108 80 110 94" stroke="#ffd86b" stroke-width="9" stroke-linecap="round" fill="none"/></g>
-<polygon points="60,14 74.7,43.8 107.5,48.5 83.8,71.7 89.4,104.5 60,89 30.6,104.5 36.2,71.7 12.5,48.5 45.3,43.8" fill="url(#sg)" stroke="#ffd86b" stroke-width="9" stroke-linejoin="round"/>
-<g class="eye"><ellipse cx="50" cy="62" rx="5" ry="7" fill="#4a2a5e"/><circle cx="52" cy="59" r="2.2" fill="#fff"/></g>
-<g class="eye"><ellipse cx="70" cy="62" rx="5" ry="7" fill="#4a2a5e"/><circle cx="72" cy="59" r="2.2" fill="#fff"/></g>
-<ellipse cx="41" cy="73" rx="6" ry="3.6" fill="#ff9ec4" opacity=".8"/><ellipse cx="79" cy="73" rx="6" ry="3.6" fill="#ff9ec4" opacity=".8"/>
-<path d="M54 73 Q60 80 66 73" stroke="#4a2a5e" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>`;
-document.querySelectorAll("[data-star]").forEach(e => e.innerHTML = `<div class="star">${STAR}</div>`);
-$("#cornerStar").innerHTML = STAR;
-
-/* twinkling sky */
-for (let i = 0; i < 55; i++) {
-  const d = document.createElement("i"); d.className = "tw";
-  d.style.cssText = `left:${rnd(0,100)}%;top:${rnd(0,100)}%;animation-delay:${rnd(0,3)}s;animation-duration:${rnd(2,5)}s`;
-  sky.appendChild(d);
-}
-/* floating things */
-function floatUp(chars, host = fx) {
-  const d = document.createElement("span"); d.className = "fl";
-  d.textContent = chars[Math.floor(Math.random() * chars.length)];
-  d.style.cssText = `left:${rnd(0,95)}%;font-size:${rnd(14,28)}px;--sx:${rnd(-40,40)}px;animation-duration:${rnd(8,14)}s`;
-  host.appendChild(d); setTimeout(() => d.remove(), 15000);
-}
-function fallStar(host) {
-  const d = document.createElement("span"); d.className = "fall";
-  d.textContent = Math.random() < .5 ? "✦" : "♥";
-  d.style.cssText = `left:${rnd(10,120)}%;font-size:${rnd(10,22)}px;animation-duration:${rnd(5,9)}s;${d.textContent==="♥"?"color:#ffb3d1":""}`;
-  host.appendChild(d); setTimeout(() => d.remove(), 9500);
-}
-if (!RM) {
-  setInterval(() => floatUp(["♥","♡","💗","✨"]), 1400);
-  setInterval(() => { if (cur === 5) { fallStar($("#s5")); fallStar($("#s5")); } }, 700);
-  setInterval(() => { if (cur === 5) shoot(); }, 5000);
-}
-function shoot() {
-  const s = document.createElement("div"); s.className = "shoot";
-  s.style.cssText = `left:${rnd(-5,40)}%;top:${rnd(2,35)}%`;
-  document.body.appendChild(s); setTimeout(() => s.remove(), 1400);
-}
-function burst(x, y, n = 28, chars = ["✨","💗","⭐","♥","✦"]) {
-  for (let i = 0; i < n; i++) {
-    const d = document.createElement("span"); d.className = "sp";
-    d.textContent = chars[i % chars.length];
-    d.style.cssText = `left:${x}px;top:${y}px;font-size:${rnd(12,26)}px;--dx:${rnd(-160,160)}px;--dy:${rnd(-200,120)}px`;
-    document.body.appendChild(d); setTimeout(() => d.remove(), 1500);
-  }
-}
-async function type(el, text, sp = 50) {
-  el.textContent = "";
-  if (RM) { el.textContent = text; return; }
-  for (const ch of Array.from(text)) { el.textContent += ch; await wait(sp); }
-}
-const reveal = b => b.classList.add("show");
-
-/* music */
-const musicBtn = $("#music");
-let audio = null, userPaused = false, blocked = false;
-if (SONG_SRC) {
-  audio = new Audio(SONG_SRC); audio.loop = true; audio.volume = .3;
-  audio.addEventListener("error", () => { musicBtn.classList.remove("on"); audio = null; });
-  musicBtn.classList.add("on");
-  audio.play().catch(() => { blocked = true; });          // autoplay attempt
-}
-function startMusic() {
-  if (audio && !userPaused && audio.paused) audio.play().then(() => blocked = false).catch(() => {});
-}
-addEventListener("pointerdown", () => { if (blocked) startMusic(); }, { once: false });
-musicBtn.onclick = () => {
-  if (!audio) return;
-  if (audio.paused) { userPaused = false; audio.play().catch(()=>{}); musicBtn.classList.remove("off"); musicBtn.textContent = "♪"; }
-  else { userPaused = true; audio.pause(); musicBtn.classList.add("off"); musicBtn.textContent = "♪̸"; }
-};
-
-/* scenes */
-let cur = 1; const entered = {};
-function go(n) {
-  $("#s" + cur).classList.remove("on");
-  setTimeout(() => {
-    cur = n; $("#s" + n).classList.add("on");
-    if (n !== 4) stopVideo();
-    if (!entered[n] && enter[n]) { entered[n] = 1; enter[n](); }
-  }, RM ? 0 : 700);
-}
-const enter = {
-  1: async () => {
-    await wait(700);
-    await type($("#t1a"), S1_LINES[0]); await wait(500);
-    await type($("#t1b"), S1_LINES[1]); await wait(300);
-    reveal($("#go1"));
-  },
-  2: async () => {
-    const card = $("#card"), btn = $("#go2");
-    for (let i = 0; i < LETTER.length; i++) {
-      const p = document.createElement("p");
-      if (i === LETTER.length - 1) p.className = "sig";
-      p.textContent = LETTER[i];
-      p.style.animationDelay = "0s";
-      card.appendChild(p);
-      card.scrollTo({ top: card.scrollHeight, behavior: RM ? "auto" : "smooth" });
-      await wait(Math.min(900 + LETTER[i].length * 28, 4200));
-    }
-    reveal(btn);
-  },
-  3: () => {},
-  4: () => buildPlayer(),
-  5: async () => {
-    const m = $("#m5");
-    for (const t of S5_LINES) { m.classList.remove("final"); await type(m, t, 55); await wait(1700); m.style.opacity = 0; await wait(600); m.style.opacity = 1; }
-    m.classList.add("final"); await type(m, S5_FINAL, 60); await wait(400);
-    reveal($("#hug"));
-  }
-};
-enter[1]();
-
-/* scene 1 → 2 */
-$("#go1").onclick = e => {
-  startMusic(); burst(e.clientX, e.clientY, 14); shoot();
-  setTimeout(() => go(2), RM ? 0 : 1000);
-};
-/* scene 2 → 3 */
-$("#go2").onclick = e => {
-  const r = $("#card").getBoundingClientRect();
-  for (let i = 0; i < 4; i++) burst(r.left + rnd(0, r.width), r.top + rnd(0, r.height), 10, ["✨","✦","💗"]);
-  $("#card").classList.add("gone"); $("#go2").classList.remove("show"); shoot();
-  setTimeout(() => go(3), RM ? 0 : 1800);
-};
-/* scene 3 */
-document.querySelectorAll("#choices .btn").forEach(b => b.onclick = async e => {
-  const i = +b.dataset.r, st = $("#s3 .star");
-  st.classList.toggle("open", i === 2);
-  if (i === 1) burst(e.clientX, e.clientY, 10, ["💗","🫂"]);
-  if (i === 2) burst(innerWidth / 2, innerHeight * .3, 24);
-  await type($("#resp"), S3_REPLIES[i], 35);
-  reveal($("#go3"));
-});
-$("#go3").onclick = () => go(4);
-
-/* scene 4: video (nothing loads unless VIDEO_SRC is filled in) */
-let video = null;
-function buildPlayer() {
-  const box = $("#player");
-  const ph = () => { box.innerHTML = `<div class="ph"><b>💗</b>${PLACEHOLDER}</div>`; video = null; };
-  if (!VIDEO_SRC) return ph();
-  video = document.createElement("video");
-  video.controls = true; video.playsInline = true; video.preload = "metadata";
-  video.setAttribute("playsinline", "");
-  video.addEventListener("error", ph);
-  video.addEventListener("play", () => { if (audio) audio.pause(); });
-  const resume = () => startMusic();
-  video.addEventListener("pause", resume); video.addEventListener("ended", resume);
-  video.src = VIDEO_SRC; box.appendChild(video);
-}
-function stopVideo() { if (video && !video.paused) video.pause(); }
-$("#go4").onclick = () => { stopVideo(); startMusic(); go(5); };
-
-/* scene 5 */
-$("#hug").onclick = async e => {
-  const r = e.currentTarget.getBoundingClientRect();
-  const cs = $("#cornerStar"); cs.classList.add("open");
-  for (let i = 0; i < 5; i++) burst(rnd(30, innerWidth - 30), rnd(innerHeight * .3, innerHeight * .8), 10);
-  burst(r.left + r.width / 2, r.top, 20);
-  for (let i = 0; i < 14; i++) setTimeout(() => floatUp(["💗","♥","✨","⭐","💖"]), i * 90);
-  await type($("#done"), HUG_DONE, 35);
-  setTimeout(() => cs.classList.remove("open"), 3000);
-};
-</script>
+    <!-- DYNAMIC BACKGROUND -->
+    <div class="comic-bg"></div>
+    <div class="burst-rays"></div>
+    <div class="halftone"></div>
+    
+    <!-- FLOATING MILES IMAGES (TUMHARI UPLOADED PNGs) -->
+    <img src="images\Adobe Express - file (2).png" alt="Miles Crouching" class="miles-float miles-1">
+    <img src="images\Untitled.png" alt="Miles Jumping" class="miles-float miles-2">
+    
+    
+    <!-- MOVING SPIDERS -->
+    <div class="spider-container" id="spiderContainer"></div>
+    
+    <nav>
+        <div class="logo">ARCTURUS_</div>
+        <ul class="nav-links">
+            <li><a href="#origin">ORIGIN</a></li>
+            <li><a href="#interests">TRAITS</a></li>
+            <li><a href="#gaming">LOADOUT</a></li>
+            <li><a href="#connect">SIGNAL</a></li>
+        </ul>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">// MIZORAM_UNIVERSITY // SPIDER-VERSE</span>
+            
+            <!-- TUMHARI COMIC STYLE PHOTO -->
+            <div class="profile-container">
+                <div class="profile-box">
+                    <img src="Arcturus11.jpeg" alt="Vikramakshit Comic Style" class="profile-image">
+                </div>
+            </div>
+            
+            <h1 class="glitch" data-text="VIKRAMAKSHIT">VIKRAMAKSHIT</h1>
+            <div class="hero-handle">@be_arcturus</div>
+            <p class="hero-bio">
+                18 y/o Vibe Coder from Mizoram University. B.Tech ECE 1st Year. 
+                Building circuits by day, training neural nets by night. 
+                Always chasing the next adventure.
+            </p>
+            <div class="hero-meta">
+                <span class="meta-badge">⚡ ECE '28</span>
+                <span class="meta-badge">🎮 GAMER</span>
+                <span class="meta-badge">🤖 AI</span>
+                <span class="meta-badge">🎒 TRAVELER</span>
+            </div>
+            <a href="#origin" class="hero-cta">
+                ENTER_MY_VERSE →
+            </a>
+        </div>
+    </section>
+    
+    <section class="panel-section" id="origin">
+        <h2 class="section-title glitch" data-text="ORIGIN_STORY">ORIGIN_STORY</h2>
+        <div class="comic-grid">
+            <div class="comic-card">
+                <div class="card-header">
+                    <span class="card-icon">🎓</span>
+                    <span class="card-issue">ISSUE #001</span>
+                </div>
+                <h3 class="card-title">The University Bite</h3>
+                <p class="card-content">
+                    Got bit by the engineering bug at Mizoram University. 
+                    Freshman year ECE—learning to tame electrons while dreaming in code. 
+                    18 years old and already building my multiverse.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">B.Tech ECE</span>
+                    <span class="tech-tag">1st Year</span>
+                </div>
+            </div>
+            
+            <div class="comic-card">
+                <div class="card-header">
+                    <span class="card-icon">💻</span>
+                    <span class="card-issue">ISSUE #042</span>
+                </div>
+                <h3 class="card-title">Vibe Coder Mode</h3>
+                <p class="card-content">
+                    No rigid patterns, just pure flow. I code what feels right—
+                    AI experiments, electronic circuits, sci-fi inspired projects. 
+                    The vibe is the architecture.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Arduino</span>
+                    <span class="tech-tag">AI/ML</span>
+                </div>
+            </div>
+            
+            <div class="comic-card">
+                <div class="card-header">
+                    <span class="card-icon">🎒</span>
+                    <span class="card-issue">ISSUE #103</span>
+                </div>
+                <h3 class="card-title">The Wanderlust</h3>
+                <p class="card-content">
+                    Traveling is my debug mode. New places, new perspectives, 
+                    new inspiration. Every journey adds a new dimension to my code. 
+                    Currently exploring Mizoram's hidden trails.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Adventure</span>
+                    <span class="tech-tag">Photography</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="panel-section interests-section" id="interests">
+        <h2 class="section-title glitch" data-text="TRAITS_&_POWERS">TRAITS_&_POWERS</h2>
+        <div class="interests-grid">
+            <div class="interest-item">
+                <div class="interest-icon">🤖</div>
+                <div class="interest-label">AI/ML</div>
+            </div>
+            <div class="interest-item">
+                <div class="interest-icon">🔌</div>
+                <div class="interest-label">ELECTRONICS</div>
+            </div>
+            <div class="interest-item">
+                <div class="interest-icon">🚀</div>
+                <div class="interest-label">SCI-FI</div>
+            </div>
+            <div class="interest-item">
+                <div class="interest-icon">🎵</div>
+                <div class="interest-label">MUSIC</div>
+            </div>
+            <div class="interest-item">
+                <div class="interest-icon">🎒</div>
+                <div class="interest-label">TRAVEL</div>
+            </div>
+            <div class="interest-item">
+                <div class="interest-icon">⌨️</div>
+                <div class="interest-label">TECH</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="panel-section gaming-section" id="gaming">
+        <h2 class="section-title glitch" data-text="GAMING_LOADOUT">GAMING_LOADOUT</h2>
+        <div class="gaming-grid">
+            <div class="game-card">
+                <div class="game-icon">⚔️</div>
+                <div class="game-name">CLASH OF CLANS</div>
+                <div class="game-id">#8J2V9L0P</div>
+            </div>
+            <div class="game-card">
+                <div class="game-icon">🔥</div>
+                <div class="game-name">FREE FIRE</div>
+                <div class="game-id">Arcturus_FF</div>
+            </div>
+            <div class="game-card">
+                <div class="game-icon">⭐</div>
+                <div class="game-name">BRAWL STARS</div>
+                <div class="game-id">#9Q8R7S6T</div>
+            </div>
+            <div class="game-card">
+                <div class="game-icon">🎯</div>
+                <div class="game-name">COD MOBILE</div>
+                <div class="game-id">Arcturus_COD</div>
+            </div>
+            <div class="game-card">
+                <div class="game-icon">🧱</div>
+                <div class="game-name">ROBLOX</div>
+                <div class="game-id">@arcturus_rbx</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="quote-section">
+        <!-- MILES UPSIDE DOWN (TUMHARI UPLOADED IMAGE) -->
+        
+        <p class="quote-text">
+            "What makes you different is what makes you Spider-Man"
+        </p>
+        <p class="quote-author">— Miles Morales</p>
+    </section>
+    
+    <section class="panel-section social-section" id="connect">
+        <h2 class="section-title glitch" data-text="ESTABLISH_LINK">ESTABLISH_LINK</h2>
+        <p class="social-cta">Find me in the digital multiverse</p>
+        <a href="https://instagram.com/be_arcturus" target="_blank" class="social-handle">
+            📸 @be_arcturus
+        </a>
+        <p style="color: var(--comic-gray); font-size: 1rem; max-width: 500px; margin: 2rem auto 0;">
+            Slide into the DMs for collabs, gaming sessions, 
+            or just to talk about the latest sci-fi binge.
+        </p>
+    </section>
+    
+    <footer>
+        <p class="footer-quote">"Anyone can wear the mask"</p>
+        <p class="footer-credit">// Vikramakshit // Arcturus // Spider-Verse // 2026</p>
+    </footer>
+    
+    <script>
+        // GENERATE MOVING SPIDERS
+        const spiderContainer = document.getElementById('spiderContainer');
+        const spiderEmojis = ['🕷️', '🕸️', '🕷️', '🕸️', '🕷️'];
+        
+        for (let i = 0; i < 6; i++) {
+            const spider = document.createElement('div');
+            spider.className = 'spider';
+            spider.textContent = spiderEmojis[i % spiderEmojis.length];
+            spider.style.setProperty('--start-x', (Math.random() * window.innerWidth) + 'px');
+            spider.style.setProperty('--start-y', (Math.random() * window.innerHeight) + 'px');
+            spider.style.setProperty('--duration', (12 + Math.random() * 15) + 's');
+            spider.style.left = '0';
+            spider.style.top = '0';
+            spiderContainer.appendChild(spider);
+        }
+        
+        // RANDOM GLITCH TRIGGERS
+        setInterval(() => {
+            const glitches = document.querySelectorAll('.glitch');
+            const random = glitches[Math.floor(Math.random() * glitches.length)];
+            random.style.animation = 'none';
+            setTimeout(() => {
+                random.style.animation = '';
+            }, 100);
+        }, 3000);
+        
+        // ADD SPIDER ON CLICK
+        document.addEventListener('click', (e) => {
+            const spider = document.createElement('div');
+            spider.textContent = '🕷️';
+            spider.style.position = 'fixed';
+            spider.style.left = e.clientX + 'px';
+            spider.style.top = e.clientY + 'px';
+            spider.style.fontSize = '2rem';
+            spider.style.pointerEvents = 'none';
+            spider.style.zIndex = '9999';
+            spider.style.animation = 'spiderPop 1s ease-out forwards';
+            spider.style.textShadow = '0 0 10px #e23636';
+            spider.style.filter = 'drop-shadow(0 0 5px #e23636)';
+            document.body.appendChild(spider);
+            
+            setTimeout(() => spider.remove(), 1000);
+        });
+        
+        // SPIDER POP ANIMATION
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spiderPop {
+                0% { transform: scale(0) rotate(0deg); opacity: 1; }
+                50% { transform: scale(1.5) rotate(180deg); }
+                100% { transform: scale(0) rotate(360deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
