@@ -1,1213 +1,421 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vikramakshit | Arcturus // Spider-Verse</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-        
-        :root {
-            --miles-black: #0a0a0a;
-            --miles-red: #e23636;
-            --miles-dark-red: #8b0000;
-            --miles-bright-red: #ff4444;
-            --comic-yellow: #ffd700;
-            --comic-white: #f0f0f0;
-            --comic-gray: #888888;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-            background: var(--miles-black);
-        }
-        
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: var(--miles-black);
-            color: var(--comic-white);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-        
-        /* DYNAMIC COMIC BACKGROUND */
-        .comic-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(226, 54, 54, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(255, 68, 68, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
-            animation: bgPulse 6s ease-in-out infinite;
-        }
-        
-        @keyframes bgPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-        
-        /* BOLD HALFTONE */
-        .halftone {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle at center, var(--miles-red) 2px, transparent 2px);
-            background-size: 10px 10px;
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 1;
-            animation: halftoneMove 15s linear infinite;
-        }
-        
-        @keyframes halftoneMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(10px, 10px); }
-        }
-        
-        /* COMIC BURST RAYS */
-        .burst-rays {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 200vmax;
-            height: 200vmax;
-            transform: translate(-50%, -50%);
-            background: repeating-conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                transparent 6deg,
-                rgba(226, 54, 54, 0.05) 6deg,
-                rgba(226, 54, 54, 0.05) 8deg
-            );
-            animation: burstRotate 50s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        @keyframes burstRotate {
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        /* FLOATING MILES IMAGES */
-        .miles-float {
-            position: fixed;
-            pointer-events: none;
-            z-index: 2;
-            filter: drop-shadow(0 0 20px rgba(226, 54, 54, 0.6));
-            animation: floatMiles 8s ease-in-out infinite;
-        }
-        
-        .miles-1 {
-            bottom: 5%;
-            right: 2%;
-            width: 260px;
-            opacity: 0.95;
-            animation-delay: 0s;
-            z-index: 5;
-        }
-        
-        .miles-2 {
-            top: 15%;
-            left: 2%;
-            width: 220px;
-            opacity: 0.85;
-            animation-delay: -4s;
-            z-index: 5;
-        }
-        
-        .miles-3 {
-            bottom: 25%;
-            left: 3%;
-            width: 180px;
-            opacity: 0.75;
-            animation-delay: -2s;
-            z-index: 4;
-        }
-        
-        @keyframes floatMiles {
-            0%, 100% { transform: translateY(0) rotate(-2deg); }
-            50% { transform: translateY(-40px) rotate(2deg); }
-        }
-        
-        /* MOVING SPIDERS */
-        .spider-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 3;
-            overflow: hidden;
-        }
-        
-        .spider {
-            position: absolute;
-            font-size: 1.8rem;
-            opacity: 0.7;
-            animation: spiderCrawl var(--duration) linear infinite;
-            filter: drop-shadow(0 0 8px var(--miles-red));
-        }
-        
-        @keyframes spiderCrawl {
-            0% {
-                transform: translate(var(--start-x), var(--start-y)) rotate(0deg);
-            }
-            25% {
-                transform: translate(calc(var(--start-x) + 80px), calc(var(--start-y) + 40px)) rotate(90deg);
-            }
-            50% {
-                transform: translate(calc(var(--start-x) + 160px), calc(var(--start-y) - 20px)) rotate(180deg);
-            }
-            75% {
-                transform: translate(calc(var(--start-x) + 240px), calc(var(--start-y) + 60px)) rotate(270deg);
-            }
-            100% {
-                transform: translate(calc(var(--start-x) + 320px), var(--start-y)) rotate(360deg);
-            }
-        }
-        
-        /* Glitch Effect */
-        .glitch {
-            position: relative;
-            animation: glitch-skew 3s infinite;
-        }
-        
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .glitch::before {
-            animation: glitch-anim-1 2s infinite linear alternate-reverse;
-            color: var(--comic-yellow);
-            z-index: -1;
-        }
-        
-        .glitch::after {
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-            color: var(--miles-red);
-            z-index: -2;
-        }
-        
-        @keyframes glitch-anim-1 {
-            0% { clip-path: inset(20% 0 80% 0); transform: translate(-3px, -3px); }
-            20% { clip-path: inset(60% 0 10% 0); transform: translate(3px, 3px); }
-            40% { clip-path: inset(40% 0 50% 0); transform: translate(-3px, 3px); }
-            60% { clip-path: inset(80% 0 5% 0); transform: translate(3px, -3px); }
-            80% { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 3px); }
-            100% { clip-path: inset(30% 0 50% 0); transform: translate(3px, -3px); }
-        }
-        
-        @keyframes glitch-anim-2 {
-            0% { clip-path: inset(15% 0 85% 0); transform: translate(3px, 3px); }
-            20% { clip-path: inset(65% 0 25% 0); transform: translate(-3px, -3px); }
-            40% { clip-path: inset(45% 0 45% 0); transform: translate(3px, -3px); }
-            60% { clip-path: inset(85% 0 10% 0); transform: translate(-3px, 3px); }
-            80% { clip-path: inset(5% 0 75% 0); transform: translate(3px, 3px); }
-            100% { clip-path: inset(35% 0 55% 0); transform: translate(-3px, 3px); }
-        }
-        
-        @keyframes glitch-skew {
-            0% { transform: skew(0deg); }
-            10% { transform: skew(-2deg); }
-            20% { transform: skew(2deg); }
-            30% { transform: skew(0deg); }
-            100% { transform: skew(0deg); }
-        }
-        
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.5rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 4px solid var(--miles-red);
-            box-shadow: 0 4px 20px rgba(226, 54, 54, 0.4);
-        }
-        
-        .logo {
-            font-family: 'Bangers', cursive;
-            font-size: 2.5rem;
-            color: var(--miles-red);
-            text-shadow: 
-                3px 3px 0 var(--comic-yellow),
-                6px 6px 0 rgba(0,0,0,0.5);
-            letter-spacing: 3px;
-            transform: rotate(-3deg);
-            animation: logoPulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes logoPulse {
-            0%, 100% { text-shadow: 3px 3px 0 var(--comic-yellow), 6px 6px 0 rgba(0,0,0,0.5); }
-            50% { text-shadow: 3px 3px 0 var(--comic-yellow), 6px 6px 0 rgba(226, 54, 54, 0.8); }
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--comic-gray);
-            text-decoration: none;
-            font-size: 0.9rem;
-            position: relative;
-            padding: 0.5rem 1rem;
-            border: 3px solid transparent;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(226, 54, 54, 0.1);
-            font-weight: bold;
-        }
-        
-        .nav-links a:hover {
-            color: var(--miles-black);
-            border-color: var(--miles-red);
-            background: var(--comic-yellow);
-            transform: scale(1.1) rotate(-2deg);
-            box-shadow: 4px 4px 0 var(--miles-red);
-        }
-        
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 8rem 2rem 4rem;
-            z-index: 10;
-        }
-        
-        .hero-content {
-            text-align: center;
-            z-index: 10;
-            max-width: 900px;
-            position: relative;
-        }
-        
-        .hero-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
-            color: var(--miles-black);
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            animation: flicker 3s infinite;
-            background: var(--comic-yellow);
-            padding: 0.6rem 1.2rem;
-            transform: rotate(-2deg);
-            border: 3px solid var(--miles-red);
-            box-shadow: 4px 4px 0 var(--miles-red);
-            font-weight: bold;
-        }
-        
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-            52% { opacity: 0.3; }
-            54% { opacity: 1; }
-        }
-        
-        .hero h1 {
-            font-family: 'Bangers', cursive;
-            font-size: clamp(4rem, 12vw, 8rem);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-            color: var(--comic-white);
-            text-shadow: 
-                4px 4px 0 var(--miles-red),
-                8px 8px 0 var(--miles-dark-red),
-                12px 12px 0 rgba(0,0,0,0.5);
-            transform: rotate(-3deg);
-            letter-spacing: 6px;
-            animation: titleShake 4s ease-in-out infinite;
-        }
-        
-        @keyframes titleShake {
-            0%, 100% { transform: rotate(-3deg); }
-            50% { transform: rotate(-2deg); }
-        }
-        
-        .hero-handle {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.4rem;
-            color: var(--miles-red);
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 20px rgba(226, 54, 54, 0.8);
-            background: var(--miles-black);
-            padding: 0.6rem 1.2rem;
-            display: inline-block;
-            transform: rotate(2deg);
-            border: 3px solid var(--miles-red);
-            box-shadow: 0 0 20px rgba(226, 54, 54, 0.3);
-            font-weight: bold;
-        }
-        
-        .hero-bio {
-            font-size: 1.25rem;
-            color: var(--comic-gray);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            line-height: 1.8;
-            background: rgba(10, 10, 10, 0.9);
-            padding: 1.5rem;
-            border-left: 5px solid var(--miles-red);
-            border-right: 5px solid var(--comic-yellow);
-            transform: rotate(-1deg);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        .hero-meta {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-        }
-        
-        .meta-badge {
-            padding: 0.7rem 1.3rem;
-            background: var(--miles-red);
-            color: var(--comic-white);
-            transform: rotate(var(--rot));
-            border: 3px solid var(--comic-white);
-            box-shadow: 4px 4px 0 var(--comic-yellow);
-            font-weight: bold;
-        }
-        
-        .meta-badge:nth-child(1) { --rot: -3deg; }
-        .meta-badge:nth-child(2) { --rot: 2deg; }
-        .meta-badge:nth-child(3) { --rot: -2deg; }
-        .meta-badge:nth-child(4) { --rot: 3deg; }
-        
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.2rem 2.5rem;
-            background: var(--miles-red);
-            color: var(--comic-white);
-            text-decoration: none;
-            font-family: 'Bangers', cursive;
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            border: 4px solid var(--comic-white);
-            transform: rotate(-2deg);
-            transition: all 0.3s;
-            box-shadow: 
-                6px 6px 0 var(--comic-yellow),
-                0 0 30px rgba(226, 54, 54, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-cta:hover {
-            transform: rotate(2deg) scale(1.05);
-            box-shadow: 
-                8px 8px 0 var(--miles-red),
-                0 0 40px rgba(255, 215, 0, 0.6);
-            background: var(--comic-yellow);
-            color: var(--miles-black);
-        }
-        
-        /* PROFILE CONTAINER - TUMHARI COMIC PHOTO */
-        .profile-container {
-            position: relative;
-            margin: 2rem auto;
-            width: 320px;
-            height: 320px;
-        }
-        
-        .profile-box {
-            width: 100%;
-            height: 100%;
-            border: 5px solid var(--comic-white);
-            background: var(--miles-black);
-            position: relative;
-            transform: rotate(-3deg);
-            box-shadow: 
-                10px 10px 0 var(--miles-red),
-                20px 20px 0 rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-        
-        .profile-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        /* Comic Panels */
-        .panel-section {
-            padding: 6rem 2rem;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .section-title {
-            font-family: 'Bangers', cursive;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            text-align: center;
-            margin-bottom: 4rem;
-            color: var(--miles-red);
-            text-shadow: 
-                3px 3px 0 var(--comic-yellow),
-                6px 6px 0 var(--miles-dark-red);
-            transform: rotate(-2deg);
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%) rotate(-2deg);
-            padding: 0.5rem 2rem;
-            background: var(--miles-black);
-            border: 5px solid var(--miles-red);
-            box-shadow: 
-                8px 8px 0 var(--comic-yellow),
-                0 0 40px rgba(226, 54, 54, 0.3);
-        }
-        
-        .comic-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .comic-card {
-            background: var(--miles-black);
-            border: 4px solid var(--comic-white);
-            padding: 2rem;
-            position: relative;
-            transform: rotate(var(--rotation));
-            transition: all 0.3s;
-            box-shadow: 
-                8px 8px 0 var(--miles-red),
-                0 0 20px rgba(0,0,0,0.5);
-        }
-        
-        .comic-card:nth-child(1) { --rotation: -3deg; }
-        .comic-card:nth-child(2) { --rotation: 2deg; }
-        .comic-card:nth-child(3) { --rotation: -2deg; }
-        
-        .comic-card:hover {
-            transform: rotate(0deg) scale(1.05);
-            z-index: 10;
-            box-shadow: 
-                12px 12px 0 var(--comic-yellow),
-                0 0 30px rgba(226, 54, 54, 0.4);
-            border-color: var(--comic-yellow);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 4px dashed var(--miles-red);
-        }
-        
-        .card-icon {
-            font-size: 2.5rem;
-            filter: drop-shadow(0 0 5px var(--miles-red));
-        }
-        
-        .card-issue {
-            font-family: 'Bangers', cursive;
-            font-size: 1.1rem;
-            color: var(--miles-black);
-            background: var(--comic-yellow);
-            padding: 0.4rem 1rem;
-            transform: rotate(3deg);
-            border: 3px solid var(--miles-black);
-            box-shadow: 2px 2px 0 var(--miles-red);
-        }
-        
-        .card-title {
-            font-family: 'Bangers', cursive;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--comic-white);
-            text-shadow: 
-                3px 3px 0 var(--miles-red),
-                6px 6px 0 rgba(0,0,0,0.5);
-        }
-        
-        .card-content {
-            font-size: 1rem;
-            color: var(--comic-gray);
-            line-height: 1.8;
-        }
-        
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-        
-        .tech-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            padding: 0.5rem 1rem;
-            background: var(--miles-red);
-            color: var(--comic-white);
-            border: 2px solid var(--comic-white);
-            transform: rotate(-1deg);
-            box-shadow: 3px 3px 0 var(--comic-yellow);
-            font-weight: bold;
-        }
-        
-        /* Interests Section */
-        .interests-section {
-            background: repeating-linear-gradient(
-                45deg,
-                var(--miles-black),
-                var(--miles-black) 20px,
-                rgba(226, 54, 54, 0.08) 20px,
-                rgba(226, 54, 54, 0.08) 40px
-            );
-            position: relative;
-        }
-        
-        .interests-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--miles-red),
-                var(--miles-red) 20px,
-                var(--comic-yellow) 20px,
-                var(--comic-yellow) 40px
-            );
-        }
-        
-        .interests-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .interest-item {
-            background: var(--miles-black);
-            border: 4px solid var(--comic-white);
-            padding: 1.5rem;
-            text-align: center;
-            transform: rotate(var(--tilt));
-            transition: all 0.3s;
-            box-shadow: 
-                6px 6px 0 var(--miles-red),
-                0 0 15px rgba(0,0,0,0.3);
-        }
-        
-        .interest-item:nth-child(1) { --tilt: -3deg; }
-        .interest-item:nth-child(2) { --tilt: 2deg; }
-        .interest-item:nth-child(3) { --tilt: -2deg; }
-        .interest-item:nth-child(4) { --tilt: 3deg; }
-        .interest-item:nth-child(5) { --tilt: -2deg; }
-        .interest-item:nth-child(6) { --tilt: 3deg; }
-        
-        .interest-item:hover {
-            transform: rotate(0deg) scale(1.15);
-            border-color: var(--comic-yellow);
-            box-shadow: 
-                10px 10px 0 var(--comic-yellow),
-                0 0 25px rgba(226, 54, 54, 0.4);
-            z-index: 10;
-            background: var(--miles-dark-red);
-        }
-        
-        .interest-icon {
-            font-size: 3rem;
-            margin-bottom: 0.75rem;
-            filter: drop-shadow(0 0 8px var(--miles-red));
-        }
-        
-        .interest-label {
-            font-family: 'Bangers', cursive;
-            font-size: 1.3rem;
-            color: var(--comic-yellow);
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 0 var(--miles-red);
-        }
-        
-        /* Gaming Section */
-        .gaming-section {
-            background: var(--miles-dark-red);
-            position: relative;
-        }
-        
-        .gaming-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--comic-yellow),
-                var(--comic-yellow) 30px,
-                var(--miles-black) 30px,
-                var(--miles-black) 60px
-            );
-        }
-        
-        .gaming-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        .game-card {
-            background: var(--miles-black);
-            border: 4px solid var(--comic-white);
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            transform: rotate(var(--tilt));
-            box-shadow: 
-                6px 6px 0 var(--comic-yellow),
-                0 0 15px rgba(0,0,0,0.4);
-        }
-        
-        .game-card:nth-child(odd) { --tilt: -2deg; }
-        .game-card:nth-child(even) { --tilt: 2deg; }
-        
-        .game-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
-            transition: left 0.6s;
-        }
-        
-        .game-card:hover::before {
-            left: 100%;
-        }
-        
-        .game-card:hover {
-            transform: rotate(0deg) scale(1.1);
-            border-color: var(--comic-yellow);
-            box-shadow: 
-                10px 10px 0 var(--miles-red),
-                0 0 25px rgba(255, 215, 0, 0.3);
-        }
-        
-        .game-icon {
-            font-size: 3rem;
-            margin-bottom: 0.75rem;
-            filter: drop-shadow(0 0 5px var(--comic-yellow));
-        }
-        
-        .game-name {
-            font-family: 'Bangers', cursive;
-            font-size: 1.3rem;
-            color: var(--comic-yellow);
-            margin-bottom: 0.5rem;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 0 var(--miles-red);
-        }
-        
-        .game-id {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--comic-white);
-            background: var(--miles-red);
-            padding: 0.6rem 1.2rem;
-            border: 2px solid var(--comic-white);
-            display: inline-block;
-            transform: rotate(-1deg);
-            font-weight: bold;
-        }
-        
-        /* Quote Section with Miles Upside Down */
-        .quote-section {
-            padding: 5rem 2rem;
-            text-align: center;
-            background: var(--miles-red);
-            position: relative;
-            border-top: 5px solid var(--comic-yellow);
-            border-bottom: 5px solid var(--comic-yellow);
-            overflow: hidden;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .quote-section::before {
-            content: '❝';
-            position: absolute;
-            top: -3rem;
-            left: 2rem;
-            font-size: 15rem;
-            color: rgba(0, 0, 0, 0.2);
-            font-family: serif;
-        }
-        
-        .quote-miles {
-            position: absolute;
-            top: 10%;
-            right: 5%;
-            width: 200px;
-            opacity: 0.9;
-            transform: scaleX(-1) rotate(15deg);
-            filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
-            animation: milesHang 4s ease-in-out infinite;
-            z-index: 1;
-        }
-        
-        @keyframes milesHang {
-            0%, 100% { transform: scaleX(-1) rotate(15deg) translateY(0); }
-            50% { transform: scaleX(-1) rotate(15deg) translateY(-15px); }
-        }
-        
-        .quote-text {
-            font-family: 'Bangers', cursive;
-            font-size: clamp(1.8rem, 4vw, 3rem);
-            color: var(--comic-white);
-            max-width: 700px;
-            margin: 0 auto 1.5rem;
-            text-shadow: 
-                4px 4px 0 var(--miles-black),
-                8px 8px 0 rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 2;
-            transform: rotate(-1deg);
-            line-height: 1.3;
-        }
-        
-        .quote-author {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.2rem;
-            color: var(--comic-yellow);
-            font-weight: bold;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Social Section */
-        .social-section {
-            text-align: center;
-            position: relative;
-        }
-        
-        .social-cta {
-            font-size: 1.3rem;
-            color: var(--comic-gray);
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-        
-        .social-handle {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem 3rem;
-            background: var(--miles-red);
-            color: var(--comic-white);
-            text-decoration: none;
-            font-family: 'Bangers', cursive;
-            font-size: 1.8rem;
-            letter-spacing: 3px;
-            border: 4px solid var(--comic-white);
-            transform: rotate(-2deg);
-            transition: all 0.4s;
-            box-shadow: 
-                8px 8px 0 var(--comic-yellow),
-                0 0 40px rgba(226, 54, 54, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .social-handle:hover {
-            background: var(--comic-yellow);
-            color: var(--miles-black);
-            transform: rotate(2deg) scale(1.1);
-            box-shadow: 
-                12px 12px 0 var(--miles-red),
-                0 0 50px rgba(255, 215, 0, 0.6);
-        }
-        
-        /* Footer */
-        footer {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 4px solid var(--miles-red);
-            position: relative;
-            z-index: 10;
-            background: var(--miles-black);
-        }
-        
-        .footer-quote {
-            font-family: 'Bangers', cursive;
-            font-size: 1.6rem;
-            color: var(--comic-gray);
-            margin-bottom: 1rem;
-            transform: rotate(-1deg);
-            text-shadow: 2px 2px 0 var(--miles-red);
-        }
-        
-        .footer-credit {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--miles-red);
-            font-weight: bold;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            .profile-container {
-                width: 260px;
-                height: 260px;
-            }
-            
-            .miles-float {
-                display: none;
-            }
-            
-            .quote-miles {
-                width: 120px;
-                opacity: 0.6;
-            }
-            
-            .interests-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .comic-card, .game-card, .interest-item {
-                transform: none !important;
-            }
-        }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 14px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--miles-black);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--miles-red);
-            border: 3px solid var(--comic-yellow);
-        }
-    </style>
-<base target="_blank">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday, Ali! 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ffc2dc;--pink2:#ffb8d6;--blue:#bfe0ff;--cream:#fff8ec;--lav:#e3d9ff;--yel:#fff2b3;--ink:#4b3b66;
+--round:'Fredoka','Trebuchet MS',sans-serif;--hand:'Caveat','Segoe Script','Comic Sans MS',cursive}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;font-family:var(--round);color:var(--ink);background:#000}
+button{font:inherit;cursor:pointer;border:0;color:var(--ink);background:var(--pink);padding:.75em 1.6em;border-radius:999px;font-size:1.1rem;font-weight:600;box-shadow:0 6px 0 #f08cb6,0 10px 18px rgba(240,140,182,.35);transition:transform .2s,box-shadow .2s}
+button:hover:not(:disabled){transform:translateY(-3px) rotate(-1.5deg);box-shadow:0 9px 0 #f08cb6,0 14px 22px rgba(240,140,182,.4)}
+button:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #f08cb6}
+button:disabled{opacity:.6;cursor:default}
+button.blue{background:var(--blue);box-shadow:0 6px 0 #8cc0f0,0 10px 18px rgba(140,192,240,.35)}
+:focus-visible{outline:4px solid #7a5cff;outline-offset:3px}
+ 
+/* ---------- Opening screen ---------- */
+#intro{position:fixed;inset:0;z-index:100;background:#000;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;text-align:center;padding:1rem;transition:opacity 1.2s,visibility 0s}
+#intro h1{font-size:clamp(2rem,7vw,3.6rem);font-weight:600;animation:fadein 2s both}
+#intro .sp{position:absolute;font-size:1.4rem;animation:blink 2.4s infinite}
+#intro button{animation:fadein 2s 1s both;transition:box-shadow .6s,transform .2s}
+#intro.glow button{box-shadow:0 0 60px 20px rgba(255,184,214,.8)}
+#intro.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1.2s,visibility 0s 1.2s}
+.ring{position:fixed;z-index:110;width:40px;height:40px;border-radius:50%;pointer-events:none;animation:ring 1.8s ease-out both}
+@keyframes ring{from{transform:translate(-50%,-50%) scale(0);opacity:.95}to{transform:translate(-50%,-50%) scale(120);opacity:0}}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:.1;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+ 
+/* ---------- Main stage ---------- */
+#main{position:fixed;inset:0;background:radial-gradient(circle at 20% 15%,#ffe9f3 0,transparent 45%),radial-gradient(circle at 85% 80%,#d9ecff 0,transparent 50%),linear-gradient(160deg,var(--cream),#f4edff);opacity:0;visibility:hidden;transition:opacity 1.2s}
+#main.vis{opacity:1;visibility:visible}
+#fx,#stars,#deco{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#cv{position:fixed;inset:0;z-index:50;pointer-events:none}
+.deco{position:absolute;transition:transform .4s ease-out}
+.deco svg{width:150px;display:block}
+.fl{position:absolute;pointer-events:none;will-change:transform}
+.balloon{bottom:-90px;width:46px;height:58px;border-radius:50% 50% 48% 48%;background:var(--c);box-shadow:inset -6px -8px 0 rgba(255,255,255,.35);animation:rise linear forwards}
+.balloon:after{content:"";position:absolute;left:50%;top:100%;width:2px;height:40px;background:#b9a9d6}
+@keyframes rise{0%{transform:translate(0,0) rotate(-4deg)}25%{transform:translate(20px,-30vh) rotate(5deg)}50%{transform:translate(-18px,-60vh) rotate(-5deg)}100%{transform:translate(10px,-125vh) rotate(4deg)}}
+.petal{top:-40px;font-size:1.4rem;animation:fall linear forwards}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(360deg)}}
+.heart{bottom:-30px;font-size:1rem;animation:rise linear forwards}
+.star{position:absolute;color:#ffd84d;animation:blink 3s infinite}
+.spark{position:fixed;z-index:60;pointer-events:none;animation:spark .9s forwards}
+@keyframes spark{to{transform:translateY(-40px) scale(1.6) rotate(40deg);opacity:0}}
+ 
+.scene{position:absolute;inset:0;overflow-y:auto;display:flex;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1s,visibility 0s 1s;z-index:5}
+.scene.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity 1s}
+.in{margin:auto;padding:2.2rem 1rem 4rem;text-align:center;max-width:760px;width:100%;display:flex;flex-direction:column;align-items:center;gap:1rem}
+h1.big{font-size:clamp(2.1rem,7vw,4rem);line-height:1.1;font-weight:600;color:#e0589a;text-shadow:3px 3px 0 #fff,6px 6px 0 var(--blue);animation:fadein 1.6s .6s both}
+.sub{font-family:var(--hand);font-size:clamp(1.6rem,4.5vw,2.2rem);animation:fadein 1.6s 1.2s both}
+.hand{font-family:var(--hand);font-size:clamp(1.6rem,4.5vw,2.2rem)}
+ 
+/* ---------- Cake ---------- */
+.cakewrap{position:relative;width:min(300px,72vw);margin:.5rem 0}
+.cakewrap svg{width:100%;display:block;overflow:visible;filter:drop-shadow(0 10px 8px rgba(120,90,160,.2))}
+#flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick .45s infinite alternate ease-in-out}
+@keyframes flick{from{transform:scale(1,1) rotate(-3deg)}to{transform:scale(.93,1.08) rotate(3deg)}}
+#flame.blown{animation:bend 1.1s forwards ease-in}
+@keyframes bend{0%{transform:rotate(0)}45%{transform:rotate(42deg) scale(1,.8)}100%{transform:rotate(65deg) scale(0)}}
+.smoke{fill:none;stroke:#cbbfe0;stroke-width:3;stroke-linecap:round;opacity:0}
+#smoke.show .smoke{animation:smoke 2.4s forwards}
+#smoke.show .s2{animation-delay:.4s}#smoke.show .s3{animation-delay:.8s}
+@keyframes smoke{0%{opacity:0;transform:translateY(8px)}30%{opacity:.9}100%{opacity:0;transform:translateY(-34px)}}
+.puff{position:absolute;left:-12%;top:20%;width:70px;height:40px;opacity:0;border-radius:50%;background:radial-gradient(#fff,rgba(191,224,255,.7) 60%,transparent 72%);filter:blur(2px);pointer-events:none}
+.puff.go{animation:puff 1s ease-out}
+@keyframes puff{0%{opacity:0;transform:translateX(0) scale(.5)}30%{opacity:1}100%{opacity:0;transform:translateX(110px) scale(1.6)}}
+.cele{display:none;flex-direction:column;align-items:center;gap:.8rem}
+.cele.on{display:flex;animation:fadein 1s both}
+.pre.off{display:none}
+.msg{font-family:var(--hand);font-size:clamp(1.6rem,4.5vw,2.1rem);max-width:30ch}
+ 
+/* ---------- Gift ---------- */
+.giftwrap{position:relative;width:min(240px,64vw)}
+.giftwrap svg{width:100%;display:block;overflow:visible;filter:drop-shadow(0 10px 8px rgba(120,90,160,.2))}
+.giftwrap .tw{position:absolute;animation:blink 2.6s infinite}
+#lid{transform-box:fill-box;transform-origin:left bottom;transition:transform 1s cubic-bezier(.3,1.5,.5,1) .7s}
+.open #lid{transform:translate(-16px,-72px) rotate(-18deg)}
+#bow,#t1,#t2,#ribV{transform-box:fill-box;transform-origin:center;transition:transform .8s,opacity .8s}
+.open #bow{transform:translateY(-26px) rotate(30deg) scale(1.3);opacity:0}
+.open #t1{transform:rotate(-50deg) translateX(-14px);opacity:0}
+.open #t2{transform:rotate(50deg) translateX(14px);opacity:0}
+.open #ribV{opacity:.3}
+#glow{opacity:0;transition:opacity .8s 1s}.open #glow{opacity:1}
+.tilt{transition:transform .3s}.tilt:hover{transform:rotate(2deg) scale(1.03)}
+ 
+/* ---------- Letter ---------- */
+.card{position:relative;background:var(--cream);border:6px solid var(--pink);outline:6px solid var(--blue);outline-offset:-14px;border-radius:26px;padding:2.2rem 1.6rem 1.6rem;box-shadow:0 14px 30px rgba(110,80,150,.22);display:flex;flex-wrap:wrap;gap:1.6rem;align-items:flex-start;justify-content:center;text-align:left;transform:perspective(900px) rotateX(-70deg) scaleY(.4);opacity:0;transform-origin:top;transition:transform 1.2s cubic-bezier(.2,1,.3,1),opacity .8s}
+.card.in2{transform:none;opacity:1}
+.card .st{position:absolute;font-size:1.5rem}
+.polaroid{background:#fff;padding:12px 12px 8px;border-radius:6px;box-shadow:0 8px 18px rgba(0,0,0,.2);transform:rotate(-4deg);width:min(240px,80%);flex:0 0 auto;margin:0 auto}
+.polaroid .ph{width:100%;aspect-ratio:1;border-radius:3px;background:linear-gradient(135deg,var(--pink),var(--blue));display:flex;align-items:center;justify-content:center;text-align:center;font-size:1rem;overflow:hidden;padding:.5rem}
+.polaroid img{width:100%;height:100%;object-fit:cover;display:block}
+.polaroid p{font-family:var(--hand);font-size:1.35rem;text-align:center;padding-top:.4rem;line-height:1.1}
+#letter{flex:1 1 280px;min-width:0;font-family:var(--hand);font-size:clamp(1.4rem,3.6vw,1.8rem);line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere;min-height:8rem;cursor:pointer}
+.after{display:none;flex-direction:column;align-items:center;gap:1rem}
+.after.on{display:flex;animation:fadein 1s both}
+.final{display:none;flex-direction:column;align-items:center;gap:1rem}
+.final.on{display:flex;animation:fadein 1s both}
+ 
+#music{position:fixed;right:14px;bottom:14px;z-index:70;width:52px;height:52px;padding:0;font-size:1.5rem;display:none;background:var(--yel);box-shadow:0 4px 0 #e6cf6b,0 8px 14px rgba(0,0,0,.15)}
+#music.show{display:block}
+#music.off{opacity:.6}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}}
+</style>
 </head>
 <body>
-    <!-- DYNAMIC BACKGROUND -->
-    <div class="comic-bg"></div>
-    <div class="burst-rays"></div>
-    <div class="halftone"></div>
-    
-    <!-- FLOATING MILES IMAGES (TUMHARI UPLOADED PNGs) -->
-    <img src="adobe.png" alt="Miles Crouching" class="miles-float miles-1">
-    <img src="Untitled.png" alt="Miles Jumping" class="miles-float miles-2">
-    
-    
-    <!-- MOVING SPIDERS -->
-    <div class="spider-container" id="spiderContainer"></div>
-    
-    <nav>
-        <div class="logo">ARCTURUS_</div>
-        <ul class="nav-links">
-            <li><a href="#origin">ORIGIN</a></li>
-            <li><a href="#interests">TRAITS</a></li>
-            <li><a href="#gaming">LOADOUT</a></li>
-            <li><a href="#connect">SIGNAL</a></li>
-        </ul>
-    </nav>
-    
-    <section class="hero">
-        <div class="hero-content">
-            <span class="hero-label">// MIZORAM_UNIVERSITY // SPIDER-VERSE</span>
-            
-            <!-- TUMHARI COMIC STYLE PHOTO -->
-            <div class="profile-container">
-                <div class="profile-box">
-                    <img src="Arcturus11.jpeg" alt="Vikramakshit Comic Style" class="profile-image">
-                </div>
-            </div>
-            
-            <h1 class="glitch" data-text="VIKRAMAKSHIT">VIKRAMAKSHIT</h1>
-            <div class="hero-handle">@be_arcturus</div>
-            <p class="hero-bio">
-                18 y/o Vibe Coder from Mizoram University. B.Tech ECE 1st Year. 
-                Building circuits by day, training neural nets by night. 
-                Always chasing the next adventure.
-            </p>
-            <div class="hero-meta">
-                <span class="meta-badge">⚡ ECE '28</span>
-                <span class="meta-badge">🎮 GAMER</span>
-                <span class="meta-badge">🤖 AI</span>
-                <span class="meta-badge">🎒 TRAVELER</span>
-            </div>
-            <a href="#origin" class="hero-cta">
-                ENTER_MY_VERSE →
-            </a>
-        </div>
-    </section>
-    
-    <section class="panel-section" id="origin">
-        <h2 class="section-title glitch" data-text="ORIGIN_STORY">ORIGIN_STORY</h2>
-        <div class="comic-grid">
-            <div class="comic-card">
-                <div class="card-header">
-                    <span class="card-icon">🎓</span>
-                    <span class="card-issue">ISSUE #001</span>
-                </div>
-                <h3 class="card-title">The University Bite</h3>
-                <p class="card-content">
-                    Got bit by the engineering bug at Mizoram University. 
-                    Freshman year ECE—learning to tame electrons while dreaming in code. 
-                    18 years old and already building my multiverse.
-                </p>
-                <div class="tech-tags">
-                    <span class="tech-tag">B.Tech ECE</span>
-                    <span class="tech-tag">1st Year</span>
-                </div>
-            </div>
-            
-            <div class="comic-card">
-                <div class="card-header">
-                    <span class="card-icon">💻</span>
-                    <span class="card-issue">ISSUE #042</span>
-                </div>
-                <h3 class="card-title">Vibe Coder Mode</h3>
-                <p class="card-content">
-                    No rigid patterns, just pure flow. I code what feels right—
-                    AI experiments, electronic circuits, sci-fi inspired projects. 
-                    The vibe is the architecture.
-                </p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">Arduino</span>
-                    <span class="tech-tag">AI/ML</span>
-                </div>
-            </div>
-            
-            <div class="comic-card">
-                <div class="card-header">
-                    <span class="card-icon">🎒</span>
-                    <span class="card-issue">ISSUE #103</span>
-                </div>
-                <h3 class="card-title">The Wanderlust</h3>
-                <p class="card-content">
-                    Traveling is my debug mode. New places, new perspectives, 
-                    new inspiration. Every journey adds a new dimension to my code. 
-                    Currently exploring Mizoram's hidden trails.
-                </p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Adventure</span>
-                    <span class="tech-tag">Photography</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="panel-section interests-section" id="interests">
-        <h2 class="section-title glitch" data-text="TRAITS_&_POWERS">TRAITS_&_POWERS</h2>
-        <div class="interests-grid">
-            <div class="interest-item">
-                <div class="interest-icon">🤖</div>
-                <div class="interest-label">AI/ML</div>
-            </div>
-            <div class="interest-item">
-                <div class="interest-icon">🔌</div>
-                <div class="interest-label">ELECTRONICS</div>
-            </div>
-            <div class="interest-item">
-                <div class="interest-icon">🚀</div>
-                <div class="interest-label">SCI-FI</div>
-            </div>
-            <div class="interest-item">
-                <div class="interest-icon">🎵</div>
-                <div class="interest-label">MUSIC</div>
-            </div>
-            <div class="interest-item">
-                <div class="interest-icon">🎒</div>
-                <div class="interest-label">TRAVEL</div>
-            </div>
-            <div class="interest-item">
-                <div class="interest-icon">⌨️</div>
-                <div class="interest-label">TECH</div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="panel-section gaming-section" id="gaming">
-        <h2 class="section-title glitch" data-text="GAMING_LOADOUT">GAMING_LOADOUT</h2>
-        <div class="gaming-grid">
-            <div class="game-card">
-                <div class="game-icon">⚔️</div>
-                <div class="game-name">CLASH OF CLANS</div>
-                <div class="game-id">#8J2V9L0P</div>
-            </div>
-            <div class="game-card">
-                <div class="game-icon">🔥</div>
-                <div class="game-name">FREE FIRE</div>
-                <div class="game-id">Arcturus_FF</div>
-            </div>
-            <div class="game-card">
-                <div class="game-icon">⭐</div>
-                <div class="game-name">BRAWL STARS</div>
-                <div class="game-id">#9Q8R7S6T</div>
-            </div>
-            <div class="game-card">
-                <div class="game-icon">🎯</div>
-                <div class="game-name">COD MOBILE</div>
-                <div class="game-id">Arcturus_COD</div>
-            </div>
-            <div class="game-card">
-                <div class="game-icon">🧱</div>
-                <div class="game-name">ROBLOX</div>
-                <div class="game-id">@arcturus_rbx</div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="quote-section">
-        <!-- MILES UPSIDE DOWN (TUMHARI UPLOADED IMAGE) -->
-        
-        <p class="quote-text">
-            "What makes you different is what makes you Spider-Man"
-        </p>
-        <p class="quote-author">— Miles Morales</p>
-    </section>
-    
-    <section class="panel-section social-section" id="connect">
-        <h2 class="section-title glitch" data-text="ESTABLISH_LINK">ESTABLISH_LINK</h2>
-        <p class="social-cta">Find me in the digital multiverse</p>
-        <a href="https://instagram.com/vikramakshit" target="_blank" class="social-handle">
-            📸 @vikramakshit
-        </a>
-        <p style="color: var(--comic-gray); font-size: 1rem; max-width: 500px; margin: 2rem auto 0;">
-            Slide into the DMs for collabs, gaming sessions, 
-            or just to talk about the latest sci-fi binge.
-        </p>
-    </section>
-    
-    <footer>
-        <p class="footer-quote">"Anyone can wear the mask"</p>
-        <p class="footer-credit">// Vikramakshit // Arcturus // Spider-Verse // 2026</p>
-    </footer>
-    
-    <script>
-        // GENERATE MOVING SPIDERS
-        const spiderContainer = document.getElementById('spiderContainer');
-        const spiderEmojis = ['🕷️', '🕸️', '🕷️', '🕸️', '🕷️'];
-        
-        for (let i = 0; i < 6; i++) {
-            const spider = document.createElement('div');
-            spider.className = 'spider';
-            spider.textContent = spiderEmojis[i % spiderEmojis.length];
-            spider.style.setProperty('--start-x', (Math.random() * window.innerWidth) + 'px');
-            spider.style.setProperty('--start-y', (Math.random() * window.innerHeight) + 'px');
-            spider.style.setProperty('--duration', (12 + Math.random() * 15) + 's');
-            spider.style.left = '0';
-            spider.style.top = '0';
-            spiderContainer.appendChild(spider);
-        }
-        
-        // RANDOM GLITCH TRIGGERS
-        setInterval(() => {
-            const glitches = document.querySelectorAll('.glitch');
-            const random = glitches[Math.floor(Math.random() * glitches.length)];
-            random.style.animation = 'none';
-            setTimeout(() => {
-                random.style.animation = '';
-            }, 100);
-        }, 3000);
-        
-        // ADD SPIDER ON CLICK
-        document.addEventListener('click', (e) => {
-            const spider = document.createElement('div');
-            spider.textContent = '🕷️';
-            spider.style.position = 'fixed';
-            spider.style.left = e.clientX + 'px';
-            spider.style.top = e.clientY + 'px';
-            spider.style.fontSize = '2rem';
-            spider.style.pointerEvents = 'none';
-            spider.style.zIndex = '9999';
-            spider.style.animation = 'spiderPop 1s ease-out forwards';
-            spider.style.textShadow = '0 0 10px #e23636';
-            spider.style.filter = 'drop-shadow(0 0 5px #e23636)';
-            document.body.appendChild(spider);
-            
-            setTimeout(() => spider.remove(), 1000);
-        });
-        
-        // SPIDER POP ANIMATION
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spiderPop {
-                0% { transform: scale(0) rotate(0deg); opacity: 1; }
-                50% { transform: scale(1.5) rotate(180deg); }
-                100% { transform: scale(0) rotate(360deg); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+ 
+<!-- =====================================================================
+  ✏️  EDIT THESE THREE LINES — everything personal lives here  ✏️
+  1) MUSIC:  put your song in the SAME folder as index.html, e.g. "music.mp3"
+  2) PHOTO:  put your ONE photo in the same folder, e.g. "us.jpg"
+  3) LETTER: write your message between the quotes. Use \n for a new line,
+             or swap the quotes for backticks (`like this`) to type real
+             line breaks and paragraphs directly.
+====================================================================== -->
+<script>
+const MUSIC_SRC = "BhaiKaBirthday.mp3";
+const FRIENDSHIP_PHOTO = "Ali.jpeg";
+const LETTER_TEXT = "🎂💗 Happy Birthday, Aliii!! 🥳🫂✨
+
+Dear Aliii, ❤️‍🩹🫶🏻
+
+Sooo bhaiii, happiest birthday to youuu!! 🎂🎉💗
+
+Pata hai, kabhi-kabhi sochta hoon ki first year mein jab main iss naye sheher mein aaya tha, tab mujhe koi nahi jaanta tha aur main bhi kisi ko nahi jaanta tha. Sab kuch naya tha, jagah nayi thi, log naye the, aur honestly, shuru mein pata nahi tha ki iss sheher mein kaise sab hoga. Phir mujhe tu, Raj aur kuch aur bhadiya log mile, aur dheere-dheere ye anjaan sheher apnaa lagnee laga bhenchoddd. 🥹❤️
+
+Aur un sab logon mein se ek tu bhi hai bhaiii. 🫂💗
+
+Dekhne mein toh hamari dosti ko abhi bas 1.5 saal ke kareeb hi hue hain, but honestly, aisa lagta hai jaise tu kaafi time se life mein hai. Kuch logon ko apna banane ke liye saalon ki zarurat nahi hoti, bas unka saath aur unka hona hi kaafi hota hai. And tu unhi logon mein se ek hai, Ali. 🫶🏻✨
+
+Aur bhai, ek cheez ke liye toh main genuinely tera thankful hoon, and that is the way tune meri mental health mein mera saath diya hai. ❤️‍🩹🫂 Shayad tujhe khud bhi nahi pata hoga ki tune kitni baar meri help ki hai, kitni baar cheezon ko thoda easy banaya hai, aur kitni baar bas tere hone se hi achha laga hai. Har baar kisi ko advice dena ya uski problems solve karna zaroori nahi hota, kabhi-kabhi bas kisi ka saath rehna bhi bahut hota hai. Aur tune mere liye woh kiya hai, bhai. 🥹❤️
+
+Thank you for being there, for listening, for helping me out, aur iss anjaan sheher mein mujhe akela feel nahi hone dene ke liye. 🫂💗
+
+Aur haan, ek baat aur bolni thi hehe. Tune iss anjaan sheher mein toh help ki hi hai, par mere khud ke sheher mein bhi kaafi help ki hai tune. 😭😂❤️ Matlab bhaiii, tu toh all-rounder nikla! Anjaan sher  se lekar apni jagah tak, har jagah kaam aa gaya tu bhenchodd.. 😂🫂
+
+Jokes apart, I genuinely appreciate you, bhai. Teri friendship mere liye matter karti hai, and I'm really glad ki college mein mujhe tu mila. Life mein pata nahi aage kaun kahan hoga, kaun kis sheher mein hoga, aur sabki life kitni change ho jayegi, but I really hope ki hamari dosti aise hi bani rahe. No matter how busy life gets, I hope we never become those people who once knew everything about each other but eventually become strangers. 🤍
+
+Tere birthday par bas yahi wish hai ki tujhe life mein woh sab mile jo tu genuinely deserve karta hai. Tu khush rahe, healthy rahe, mentally peaceful rahe, apne goals achieve kare, aur tere paas hamesha aise log rahein jo tujhe samjhein aur tera saath dein. 🧿❤️✨
+
+May this new year of your life bring you a lot of happiness 😭😂🎂
+
+Aur bhai, kabhi life difficult ho, kuch achha na lag raha ho, ya bas mann kare kisi se baat karne ka, toh yaad rakhna ki jaise tune mera saath diya hai, waise hi main bhi tere liye hoon. You don't always have to be okay, and you don't have to figure everything out alone. 🫂❤️‍🩹
+
+Thank you for being one of the good things that happened to me in this college journey, Alilawdeeee. 🥹💗
+
+ 😭🤝🏻😂
+
+Once again, HAPPY BIRTHDAYYYYY, ALIIII!! 🥳🎂🎉💗
+
+Stay the same, Aliii. Lots of love and brotherhood! 🫂❤️
+
+— Tera dost, jo khush hai ki iss sheher mein tu mila. 🤍";
+</script>
+ 
+<!-- Opening screen -->
+<div id="intro">
+  <span class="sp" style="top:30%;left:22%">✨</span><span class="sp" style="top:62%;left:76%;animation-delay:1s">✨</span><span class="sp" style="top:22%;left:70%;animation-delay:1.7s">✦</span>
+  <h1>Are you Ali? 👀</h1>
+  <button id="yes">Yesss! 💗</button>
+</div>
+ 
+<div id="main" aria-live="polite">
+  <div id="stars"></div>
+  <div id="deco">
+    <svg width="0" height="0" style="position:absolute"><symbol id="cloud" viewBox="0 0 150 70"><path d="M30 62a22 22 0 0 1-2-44 30 30 0 0 1 56-8 26 26 0 0 1 40 18 18 18 0 0 1-4 34z" fill="#fff" opacity=".85"/></symbol></svg>
+    <div class="deco" data-d="30" style="top:5%;left:3%"><svg><use href="#cloud"/></svg></div>
+    <div class="deco" data-d="-24" style="top:12%;right:4%"><svg style="width:120px"><use href="#cloud"/></svg></div>
+    <div class="deco" data-d="18" style="bottom:6%;left:6%;font-size:2.6rem">🌼</div>
+    <div class="deco" data-d="-34" style="bottom:8%;right:8%;font-size:2.6rem">🌷</div>
+    <div class="deco" data-d="22" style="top:46%;left:2%;font-size:2rem">🎀</div>
+  </div>
+  <div id="fx"></div>
+ 
+  <!-- Scene 1: greeting + cake -->
+  <section class="scene" id="sc-cake"><div class="in">
+    <h1 class="big">Happiest Birthday, Aliii! 🎂</h1>
+    <p class="sub">Today is all about you, birthday boy! 💙</p>
+    <div class="cakewrap">
+      <div class="puff" id="puff"></div>
+      <svg viewBox="0 0 300 290" role="img" aria-label="A pink and blue birthday cake with a lit candle">
+        <ellipse cx="150" cy="262" rx="138" ry="16" fill="#e3d9ff"/>
+        <rect x="50" y="160" width="200" height="98" rx="16" fill="#fff1d6"/>
+        <path d="M50 176Q50 160 68 160H232Q250 160 250 176V188Q240 206 228 188Q216 174 204 192Q192 208 180 190Q168 176 156 192Q144 208 132 190Q120 176 108 192Q96 208 84 190Q72 176 50 190Z" fill="#a9d4ff"/>
+        <rect x="85" y="102" width="130" height="62" rx="14" fill="#fff1d6"/>
+        <path d="M85 116Q85 102 101 102H199Q215 102 215 116V126Q206 140 196 126Q186 114 176 128Q166 142 156 126Q146 114 136 128Q126 142 116 126Q106 114 85 128Z" fill="#ffb0d2"/>
+        <g id="pearls" fill="#fffdf6" stroke="#f3e2c0"></g><g id="sprinkles"></g>
+        <rect x="144" y="62" width="12" height="42" rx="3" fill="#fff2b3" stroke="#f2d56b"/>
+        <path d="M144 74l12-5M144 86l12-5M144 98l12-5" stroke="#d8c8ff" stroke-width="3"/>
+        <path d="M150 62v-7" stroke="#6b5a7e" stroke-width="2.5" stroke-linecap="round"/>
+        <g id="smoke"><path class="smoke s1" d="M150 52q-9-8 0-16t0-16"/><path class="smoke s2" d="M148 52q9-8 0-16t0-16"/><path class="smoke s3" d="M152 52q-7-8 0-14t0-14"/></g>
+        <g id="flame"><path transform="translate(150 56)" d="M0 0C-10-8-7-22 0-33 7-22 10-8 0 0Z" fill="#ffc83d"/><path transform="translate(150 56)" d="M0 0C-5-4-3-12 0-18 3-12 5-4 0 0Z" fill="#fff6c2"/></g>
+      </svg>
+    </div>
+    <div class="pre" id="pre">
+      <p class="hand" style="margin-bottom:1rem">Okay birthday boy, make a wish! ✨</p>
+      <button id="blow">Blow the candles! 🌬️</button>
+    </div>
+    <div class="cele" id="cele">
+      <h1 class="big">HAPPY BIRTHDAY, ALI! 🥳💙</h1>
+      <p class="msg">May your year be filled with happiness, laughter, good memories, and lots of cake!</p>
+      <button id="toGift" class="blue">Wait, there's more! 🎁</button>
+    </div>
+  </div></section>
+ 
+  <!-- Scene 2: gift -->
+  <section class="scene" id="sc-gift"><div class="in">
+    <h1 class="big" style="font-size:clamp(1.8rem,6vw,3.2rem)">Waittt... I have something for you! 🎁</h1>
+    <div class="giftwrap tilt" id="gift">
+      <span class="tw" style="top:0;left:-6%">✨</span><span class="tw" style="top:20%;right:-8%;animation-delay:.8s">⭐</span><span class="tw" style="bottom:12%;left:-10%;animation-delay:1.4s">🌸</span>
+      <svg viewBox="0 0 240 240" id="giftsvg" role="img" aria-label="A pastel gift box with a pink ribbon">
+        <rect x="40" y="110" width="160" height="112" rx="10" fill="#bfe0ff"/>
+        <rect id="ribV" x="108" y="110" width="24" height="112" fill="#ffb0d2"/>
+        <ellipse id="glow" cx="120" cy="112" rx="72" ry="10" fill="#fff2b3"/>
+        <g id="lid"><rect x="30" y="76" width="180" height="38" rx="10" fill="#ffc2dc"/><rect x="108" y="76" width="24" height="38" fill="#ffb0d2"/></g>
+        <path id="t1" d="M120 78l-18 30" stroke="#ff8fbf" stroke-width="9" stroke-linecap="round"/>
+        <path id="t2" d="M120 78l18 30" stroke="#ff8fbf" stroke-width="9" stroke-linecap="round"/>
+        <g id="bow"><ellipse cx="98" cy="64" rx="22" ry="12" transform="rotate(-25 98 64)" fill="#ff9ec6"/><ellipse cx="142" cy="64" rx="22" ry="12" transform="rotate(25 142 64)" fill="#ff9ec6"/><circle cx="120" cy="72" r="9" fill="#ff7fb3"/></g>
+      </svg>
+    </div>
+    <p class="hand">Ready for your gift?</p>
+    <button id="open">Open your gift! 🎀</button>
+  </div></section>
+ 
+  <!-- Scene 3: letter -->
+  <section class="scene" id="sc-letter"><div class="in">
+    <div class="card" id="card">
+      <span class="st" style="top:-14px;left:12px">🌸</span><span class="st" style="top:-12px;right:18px">⭐</span><span class="st" style="bottom:-14px;left:30px">🌼</span><span class="st" style="bottom:-12px;right:14px">💙</span>
+      <!-- Exactly ONE photo. Set FRIENDSHIP_PHOTO at the top of this file. -->
+      <div class="polaroid tilt">
+        <div class="ph" id="ph">📷 Add your photo in FRIENDSHIP_PHOTO</div>
+        <p>A little memory, a lot of friendship 💙</p>
+      </div>
+      <div id="letter" title="Tap to show the whole letter"></div>
+    </div>
+    <div class="after" id="after">
+      <button id="hug">One more birthday hug! 🤗</button>
+      <div class="final" id="final">
+        <p class="msg">Stay happy, stay awesome, and never stop being you! 💙</p>
+        <button id="replay" class="blue">Replay the surprise 🎂</button>
+      </div>
+    </div>
+  </div></section>
+</div>
+ 
+<canvas id="cv"></canvas>
+<button id="music" aria-label="Pause music" aria-pressed="true" title="Music on/off">🎵</button>
+ 
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rnd = (a, b) => a + Math.random() * (b - a);
+const COL = ['#ffb0d2', '#a9d4ff', '#fff2a8', '#d8c8ff', '#ffffff', '#ffd6e7'];
+let timers = [], typ = null, live = false, blown = false, userPaused = false, tick = 0;
+const later = (f, ms) => timers.push(setTimeout(f, ms));
+ 
+/* ---------- Music: ONE audio element, created once, never recreated ---------- */
+const audio = new Audio();
+audio.loop = true; audio.preload = 'auto';
+let musicOK = !!MUSIC_SRC;
+if (musicOK) { audio.src = MUSIC_SRC; audio.addEventListener('error', () => { musicOK = false; }); }
+const mBtn = $('#music');
+function mUI() {
+  const on = musicOK && !audio.paused;
+  mBtn.textContent = on ? '🎵' : '🔇'; mBtn.classList.toggle('off', !on);
+  mBtn.setAttribute('aria-pressed', on); mBtn.setAttribute('aria-label', on ? 'Pause music' : 'Play music');
+}
+audio.addEventListener('play', mUI); audio.addEventListener('pause', mUI);
+function startMusic() { // must run directly inside a click handler
+  if (!musicOK || userPaused || !audio.paused) return;
+  try { const p = audio.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+}
+mBtn.onclick = () => {
+  if (!musicOK) return;
+  if (audio.paused) { userPaused = false; try { const p = audio.play(); p && p.catch && p.catch(() => {}); } catch (e) {} }
+  else { userPaused = true; audio.pause(); }
+};
+ 
+/* ---------- Confetti (stars, hearts, streamers) ---------- */
+const cv = $('#cv'), cx = cv.getContext('2d'); let P = [], run = false;
+const fit = () => { cv.width = innerWidth; cv.height = innerHeight; }; fit(); addEventListener('resize', fit);
+function star(z) { cx.beginPath(); for (let i = 0; i < 10; i++) { const r = i % 2 ? z * .5 : z; cx.lineTo(Math.cos(i * Math.PI / 5) * r, Math.sin(i * Math.PI / 5) * r); } cx.closePath(); cx.fill(); }
+function burst(x, y, n) {
+  if (RM) n = Math.round(n / 4);
+  const kinds = ['r', 'c', 's', 'h', 't', 'r', 's'];
+  for (let i = 0; i < n; i++) {
+    const a = rnd(0, 6.283), s = rnd(4, 13);
+    P.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, r: rnd(0, 6), vr: rnd(-.3, .3), z: rnd(5, 11), c: COL[i % COL.length], k: kinds[i % kinds.length], l: 0 });
+  }
+  if (!run) { run = true; requestAnimationFrame(frame); }
+}
+function frame() {
+  cx.clearRect(0, 0, cv.width, cv.height);
+  P = P.filter(p => p.y < cv.height + 40 && p.l < 280);
+  for (const p of P) {
+    p.vy += .2; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.l++;
+    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.globalAlpha = Math.min(1, (280 - p.l) / 60); cx.fillStyle = p.c;
+    if (p.k === 'r') cx.fillRect(-p.z / 2, -p.z / 4, p.z, p.z / 2);
+    else if (p.k === 'c') { cx.beginPath(); cx.arc(0, 0, p.z / 2, 0, 6.283); cx.fill(); }
+    else if (p.k === 's') star(p.z * .8);
+    else if (p.k === 't') cx.fillRect(-2, -p.z * 2, 4, p.z * 4);
+    else { cx.font = (p.z * 2) + 'px serif'; cx.textAlign = 'center'; cx.fillText('💗', 0, 0); }
+    cx.restore();
+  }
+  if (P.length) requestAnimationFrame(frame); else run = false;
+}
+ 
+/* ---------- Floating decorations ---------- */
+const fx = $('#fx');
+function drift(cls, html, dur, css) {
+  if (fx.children.length > 40) return;
+  const e = document.createElement('span'); e.className = 'fl ' + cls; e.innerHTML = html;
+  e.style.cssText = css + ';animation-duration:' + dur + 's'; fx.appendChild(e);
+  e.addEventListener('animationend', () => e.remove());
+}
+const balloon = () => drift('balloon', '', rnd(14, 22), `left:${rnd(4, 92)}%;--c:${COL[(Math.random() * 4) | 0]}`);
+setInterval(() => {
+  if (!live || document.hidden || RM) return; tick++;
+  drift('petal', ['🌸', '🌼', '🌷', '🌺'][tick % 4], rnd(9, 15), `left:${rnd(0, 95)}%;--dx:${rnd(-120, 120)}px`);
+  if (tick % 2 === 0) balloon();
+  if (tick % 4 === 0) drift('heart', '💗', rnd(10, 16), `left:${rnd(5, 90)}%`);
+}, 1500);
+for (let i = 0; i < 16; i++) { const s = document.createElement('span'); s.className = 'star'; s.textContent = '✦'; s.style.cssText = `left:${rnd(2, 96)}%;top:${rnd(2, 92)}%;font-size:${rnd(.8, 1.6)}rem;animation-delay:${rnd(0, 3)}s`; $('#stars').appendChild(s); }
+const D = [...document.querySelectorAll('.deco')];
+addEventListener('mousemove', e => { if (RM) return; const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5; D.forEach(d => d.style.transform = `translate(${x * d.dataset.d}px,${y * d.dataset.d}px)`); });
+document.addEventListener('click', e => {
+  if (!live || e.target.closest('button')) return;
+  const s = document.createElement('span'); s.className = 'spark'; s.textContent = ['✨', '⭐', '💫'][(Math.random() * 3) | 0];
+  s.style.cssText = `left:${e.clientX - 10}px;top:${e.clientY - 10}px`; document.body.appendChild(s); setTimeout(() => s.remove(), 900);
+});
+ 
+/* ---------- Cake decorations ---------- */
+const NS = 'http://www.w3.org/2000/svg';
+const add = (p, n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); $(p).appendChild(e); };
+for (let x = 66; x <= 234; x += 21) add('#pearls', 'circle', { cx: x, cy: 248, r: 6 });
+for (let x = 100; x <= 200; x += 20) add('#pearls', 'circle', { cx: x, cy: 158, r: 4.5 });
+for (let i = 0; i < 26; i++) {
+  const top = i < 10, x = top ? rnd(95, 205) : rnd(60, 240), y = top ? rnd(135, 156) : rnd(205, 238);
+  add('#sprinkles', 'rect', { x, y, width: 9, height: 3.5, rx: 1.7, fill: COL[i % 4], transform: `rotate(${rnd(0, 180) | 0} ${x} ${y})` });
+}
+ 
+/* ---------- Scenes ---------- */
+const scenes = [...document.querySelectorAll('.scene')];
+function show(id) { scenes.forEach(s => s.classList.toggle('on', s.id === id)); if (id) $('#' + id).scrollTop = 0; }
+ 
+/* YES: music + reveal in the same click handler */
+$('#yes').onclick = function () {
+  startMusic();                       // direct call inside the user's click
+  mBtn.classList.add('show'); mUI();
+  this.disabled = true;
+  const r = this.getBoundingClientRect(), cxp = r.left + r.width / 2, cyp = r.top + r.height / 2;
+  $('#intro').classList.add('glow');
+  ['#ffb0d2', '#a9d4ff', '#e3d9ff'].forEach((c, i) => {
+    const d = document.createElement('div'); d.className = 'ring'; d.style.cssText = `left:${cxp}px;top:${cyp}px;background:${c};animation-delay:${i * .25}s`;
+    document.body.appendChild(d); setTimeout(() => d.remove(), 2800);
+  });
+  later(() => { $('#main').classList.add('vis'); show('sc-cake'); live = true; for (let i = 0; i < 5; i++) later(balloon, i * 500); burst(innerWidth / 2, innerHeight / 2, 90); }, 650);
+  later(() => $('#intro').classList.add('gone'), 800);
+};
+ 
+/* Cake */
+$('#blow').onclick = function () {
+  if (blown) return; blown = true; this.disabled = true;
+  $('#puff').classList.add('go');
+  later(() => $('#flame').classList.add('blown'), 500);
+  later(() => $('#smoke').classList.add('show'), 1300);
+  later(() => {
+    $('#pre').classList.add('off'); $('#cele').classList.add('on');
+    burst(innerWidth / 2, innerHeight * .4, 170); burst(innerWidth * .15, innerHeight * .6, 70); burst(innerWidth * .85, innerHeight * .6, 70);
+    later(toGift, 9000);
+  }, 1800);
+};
+$('#toGift').onclick = toGift;
+function toGift() { if ($('#sc-gift').classList.contains('on')) return; show('sc-gift'); }
+ 
+/* Gift */
+$('#open').onclick = function () {
+  this.disabled = true; $('#gift').classList.add('open');
+  later(() => { const r = $('#giftsvg').getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height * .35, 130); }, 1300);
+  later(() => { show('sc-letter'); later(() => { $('#card').classList.add('in2'); later(typeLetter, 1000); }, 400); }, 2800);
+};
+ 
+/* Letter */
+const letterTxt = LETTER_TEXT || "Your birthday letter goes here 💌\n\nOpen index.html in a text editor and write your message in LETTER_TEXT at the top of the file.";
+if (FRIENDSHIP_PHOTO) {
+  const img = new Image(); img.alt = 'Ali and me together'; img.onload = () => { $('#ph').textContent = ''; $('#ph').appendChild(img); };
+  img.onerror = () => {}; img.src = FRIENDSHIP_PHOTO;   // on failure the placeholder stays
+}
+function typeLetter() {
+  const el = $('#letter'); let i = 0; const step = RM ? letterTxt.length : Math.max(1, Math.ceil(letterTxt.length / 700));
+  const done = () => { clearInterval(typ); el.textContent = letterTxt; $('#after').classList.add('on'); el.onclick = null; };
+  el.onclick = done;
+  typ = setInterval(() => { i += step; if (i >= letterTxt.length) done(); else el.textContent = letterTxt.slice(0, i); }, 30);
+}
+$('#hug').onclick = () => {
+  burst(innerWidth / 2, innerHeight * .5, 150); burst(innerWidth * .2, innerHeight * .7, 60); burst(innerWidth * .8, innerHeight * .7, 60);
+  $('#final').classList.add('on');
+};
+ 
+/* Replay: back to the black opening screen. Music keeps its current state (no restart, no second audio). */
+$('#replay').onclick = () => {
+  timers.forEach(clearTimeout); timers = []; clearInterval(typ);
+  live = false; blown = false; P = []; cx.clearRect(0, 0, cv.width, cv.height); fx.innerHTML = '';
+  $('#flame').classList.remove('blown'); $('#smoke').classList.remove('show'); $('#puff').classList.remove('go');
+  $('#pre').classList.remove('off'); $('#cele').classList.remove('on'); $('#blow').disabled = false;
+  $('#gift').classList.remove('open'); $('#open').disabled = false;
+  $('#card').classList.remove('in2'); $('#letter').textContent = ''; $('#after').classList.remove('on'); $('#final').classList.remove('on');
+  show(''); $('#main').classList.remove('vis');
+  $('#intro').classList.remove('gone', 'glow'); $('#yes').disabled = false;
+};
+})();
+</script>
 </body>
 </html>
